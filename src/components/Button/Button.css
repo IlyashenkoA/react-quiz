@@ -1,0 +1,13 @@
+button {
+    padding: 0.5em 0.75em;
+    background: #ffffff;
+    border: 0.1rem solid #000000;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+button:is(:hover, :focus) {
+    cursor: pointer;
+    background: #d3d3d3;
+}

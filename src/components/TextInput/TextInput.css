@@ -1,0 +1,22 @@
+section ul:has(input[type="text"]) {
+    display: grid;
+    grid-template-columns: repeat(2, 25%);
+    grid-template-rows: repeat(3, 1fr);
+    grid-auto-flow: column;
+}
+
+section li:has(input[type="text"]) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5em;
+    width: max-content;
+}
+
+section li:has(input[type="text"]) > label {
+    padding: 0;
+    overflow-wrap: break-word;
+}
+
+input[type="text"]:hover {
+    cursor: text;
+}

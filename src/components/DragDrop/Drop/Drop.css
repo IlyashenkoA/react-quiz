@@ -1,0 +1,11 @@
+.drop {
+    border: 1px solid black;
+    height: 7.5em;
+    width: 7.5em;
+    text-align: center;
+
+    overflow-wrap: break-word;
+
+    display: grid;
+    place-items: center;
+}
