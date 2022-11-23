@@ -7,7 +7,6 @@ import Intro from '../Intro/Intro';
 import Section from '../Section/Section';
 
 import { SaveDataHandle } from '../../types';
-
 import { RootState } from '../../store/reducers';
 
 import './App.css';

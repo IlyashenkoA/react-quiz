@@ -13,7 +13,7 @@ export interface LastDroppedItems {
     lasDroppedItem: string | null;
 }
 
-interface handleDropProps {
+export interface handleDropProps {
     dragItem: DragLabel;
     dropId: number;
 }

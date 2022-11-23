@@ -5,37 +5,33 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import CheckboxInput from "../CheckboxInput/CheckboxInput";
 import RadioInput from "../RadioInput/RadioInput";
 import TextInput from "../TextInput/TextInput";
+import DragDrop from "../DragDrop/DragDrop";
 
 import { QuestionData, QUESTIONS, SaveDataHandle } from "../../types";
 
 import './Section.css';
-import DragDrop from "../DragDrop/DragDrop";
 
 const getInput = (data: QuestionData, inputRef: Ref<SaveDataHandle> | undefined) => {
     const { type } = data;
 
-    if (type === QUESTIONS.TEXT) {
-        return (
-            <TextInput {...data} ref={inputRef} />
-        );
-    }
+    switch (type) {
+        case QUESTIONS.TEXT:
+            return (
+                <TextInput {...data} ref={inputRef} />
+            );
+        case QUESTIONS.CHECKBOX:
+            return (
+                <CheckboxInput {...data} ref={inputRef} />
+            );
+        case QUESTIONS.RADIO:
+            return (
+                <RadioInput {...data} ref={inputRef} />
+            );
 
-    if (type === QUESTIONS.CHECKBOX) {
-        return (
-            <CheckboxInput {...data} ref={inputRef} />
-        );
-    }
-
-    if (type === QUESTIONS.RADIO) {
-        return (
-            <RadioInput {...data} ref={inputRef} />
-        );
-    }
-
-    if (type === QUESTIONS.DRAG_AND_DROP) {
-        return (
-            <DragDrop {...data} ref={inputRef} />
-        );
+        case QUESTIONS.DRAG_AND_DROP:
+            return (
+                <DragDrop {...data} ref={inputRef} />
+            );
     }
 };
 

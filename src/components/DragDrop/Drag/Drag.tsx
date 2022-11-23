@@ -1,20 +1,14 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
+
 import { ItemTypes } from '../../../types';
+import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drag.css';
 
 interface DragProps {
     label: string;
     id: number;
-}
-
-interface DropResult {
-    label: string;
-}
-
-function isImage(url: string) {
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }
 
 const Drag: React.FC<DragProps> = React.memo(({ label, id }) => {

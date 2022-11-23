@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
+import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
@@ -22,11 +22,21 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxQuestion>((props, ref) 
         });
     });
 
-    const defaultValue = answers[0] ? answers[0].answer : getEmptyArray(label!);
-    const [answer, setAnswer] = useState<string[]>(defaultValue);
+    useEffect(() => {
+        if (answers[0]) {
+            const defaultValue = answers[0].answer;
+            setAnswer([...defaultValue]);
+            return;
+        }
+
+        const defaultValue = [''];
+        setAnswer([...defaultValue]);
+    }, [id]);
+
+    const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const array: string[] = defaultValue;
+        const array: string[] = answer;
         e.target.checked ? array.splice(+e.target.id, 1, e.target.value) : array.splice(+e.target.id, 1, '');
         setAnswer([...array]);
     };

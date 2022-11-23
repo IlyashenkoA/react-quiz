@@ -1,3 +1,4 @@
+import { handleDropProps } from './../../components/DragDrop/DragDrop';
 import { ACTIONS } from './actions';
 import { QuestionData } from '../../types';
 
@@ -13,5 +14,5 @@ export interface IQuizAction {
 
 export interface IAnswer {
 	id: number;
-	answer: string[];
+	answer: any
 }

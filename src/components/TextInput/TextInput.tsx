@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
+import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
@@ -24,11 +24,27 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
         });
     });
 
-    const defaultValue = answers[0] ? answers[0].answer : getEmptyArray(label);
-    const [answer, setAnswer] = useState<string[]>(defaultValue);
+    useEffect(() => {
+        if (answers[0]) {
+            const defaultValue = answers[0].answer;
+            setAnswer([...defaultValue]);
+            return;
+        }
+
+        if (label) {
+            const defaultValue = getEmptyArray(label);
+            setAnswer([...defaultValue]);
+            return;
+        }
+
+        const defaultValue = [''];
+        setAnswer([...defaultValue]);
+    }, [id]);
+
+    const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const array: string[] = defaultValue;
+        const array: string[] = answer;
         array.splice(+e.target.id, 1, e.target.value);
         setAnswer([...array]);
     };
@@ -46,8 +62,8 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
                 {label.map((item, index) => {
                     return (
                         <li key={index.toString()}>
-                            <label htmlFor={item}>{item}</label>
-                            <input type="text" name={item} id={index.toString()} onChange={onInputChange} value={defaultValue[index]} />
+                            <label htmlFor={index.toString()}>{item}</label>
+                            <input type="text" name={item} id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} />
                         </li>
                     );
                 })}

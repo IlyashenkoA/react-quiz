@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { ItemTypes } from '../../../types';
 import { LastDroppedItems } from '../DragDrop';
+
+import { ItemTypes } from '../../../types';
+import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drop.css';
 
@@ -11,10 +13,6 @@ interface DropProps {
     id: number;
     lastDroppedItem: LastDroppedItems[];
     onDrop: (arg: any) => void;
-}
-
-function isImage(url: string) {
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }
 
 const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedItem }) => {
