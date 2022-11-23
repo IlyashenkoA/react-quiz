@@ -24,7 +24,7 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxQuestion>((props, ref) 
 
     useEffect(() => {
         if (answers[0]) {
-            const defaultValue = answers[0].answer;
+            const defaultValue = answers[0].answer as string[];
             setAnswer([...defaultValue]);
             return;
         }

@@ -14,5 +14,5 @@ export interface IQuizAction {
 
 export interface IAnswer {
 	id: number;
-	answer: any
+	answer: string[] | handleDropProps[]
 }

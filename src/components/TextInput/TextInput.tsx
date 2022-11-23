@@ -26,7 +26,7 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
 
     useEffect(() => {
         if (answers[0]) {
-            const defaultValue = answers[0].answer;
+            const defaultValue = answers[0].answer as string[];
             setAnswer([...defaultValue]);
             return;
         }
@@ -63,7 +63,7 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
                     return (
                         <li key={index.toString()}>
                             <label htmlFor={index.toString()}>{item}</label>
-                            <input type="text" name={item} id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} />
+                            <input type="text" id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} />
                         </li>
                     );
                 })}
