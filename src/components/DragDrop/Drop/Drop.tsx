@@ -1,17 +1,16 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { LastDroppedItems } from '../DragDrop';
-
 import { ItemTypes } from '../../../types';
 import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drop.css';
+import { DragDropId } from '../../../store/types';
 
 interface DropProps {
     label: string;
     id: number;
-    lastDroppedItem: LastDroppedItems[];
+    lastDroppedItem: DragDropId;
     onDrop: (arg: any) => void;
 }
 
@@ -29,7 +28,7 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
 
     const getBackgroundColor = () => {
         if (isActive) {
-            return '#4B8F8C';
+            return '#4B8F00';
         }
 
         return '#FFFFFF';
@@ -39,7 +38,7 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
         <div className='drop' id={id.toString()} ref={drop} style={{ backgroundColor: getBackgroundColor() }}>
             <span>{label}</span>
             {isActive ? <span>Release to drop</span> : null}
-            {lastDroppedItem[0].lasDroppedItem ? isImage(lastDroppedItem[0].lasDroppedItem) ? <img src={lastDroppedItem[0].lasDroppedItem} /> : <span>{lastDroppedItem[0].lasDroppedItem}</span>: null}
+            {lastDroppedItem.dragLabel ? isImage(lastDroppedItem.dragLabel) ? <img src={lastDroppedItem.dragLabel} /> : <span>{lastDroppedItem.dragLabel}</span>: null}
         </div>
     );
 });

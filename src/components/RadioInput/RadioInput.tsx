@@ -10,7 +10,7 @@ const RadioInput = forwardRef<SaveDataHandle, RadioButtonQuestion>((props, ref) 
     const { label, id } = props;
     const dispatch = useDispatch();
 
-    const answers = useSelector((state: RootState) => {
+    const savedAnswers = useSelector((state: RootState) => {
         const answerArray = state.QuizReducer.answers;
 
         return answerArray.filter((item) => {
@@ -19,8 +19,8 @@ const RadioInput = forwardRef<SaveDataHandle, RadioButtonQuestion>((props, ref) 
     });
 
     useEffect(() => {
-        if (answers[0]) {
-            const defaultValue = answers[0].answer as string[];
+        if (savedAnswers[0]) {
+            const defaultValue = savedAnswers[0].answer as string[];
             setAnswer([...defaultValue]);
             return;
         }
