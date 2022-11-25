@@ -41,20 +41,24 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ data, inputRef }) => {
-    const { question, id, img } = data;
+    if (data) {
+        const { question, id, img } = data;
 
-    return (
-        <DndProvider backend={HTML5Backend}>
-            <section className="question-container">
-                <h3>{id}. question</h3>
-                <article>
-                    <p>{question}</p>
-                    {img ? <img src={img}></img> : null}
-                    {getInput(data, inputRef)}
-                </article>
-            </section>
-        </DndProvider>
-    );
+        return (
+            <DndProvider backend={HTML5Backend}>
+                <section className="question-container">
+                    <h3>{id}. question</h3>
+                    <article>
+                        <p>{question}</p>
+                        {img ? <img src={img}></img> : null}
+                        {getInput(data, inputRef)}
+                    </article>
+                </section>
+            </DndProvider>
+        );
+    }
+
+    return null;
 };
 
 export default Section;

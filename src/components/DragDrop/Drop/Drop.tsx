@@ -28,7 +28,7 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
 
     const getBackgroundColor = () => {
         if (isActive) {
-            return '#4B8F00';
+            return '#d3d3d3';
         }
 
         return '#FFFFFF';

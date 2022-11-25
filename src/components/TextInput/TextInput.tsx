@@ -1,5 +1,6 @@
 import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isImage } from "../../assets/js/utils/Image";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
@@ -62,7 +63,7 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
                 {label.map((item, index) => {
                     return (
                         <li key={index.toString()}>
-                            <label htmlFor={index.toString()}>{item}</label>
+                            <label htmlFor={index.toString()}>{isImage(item) ? <img src={item}/> : item}</label>
                             <input type="text" id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} />
                         </li>
                     );
