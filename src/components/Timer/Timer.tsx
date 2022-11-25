@@ -1,6 +1,6 @@
 import { useEffect, useState, forwardRef, useImperativeHandle, SetStateAction, Dispatch } from "react";
 
-import { config } from "../api/data";
+import { config } from "../../api/data";
 
 export type StopTimerHandle = {
     stopTimer: () => void;
@@ -26,18 +26,14 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
     const [minutes, setMinutes] = useState<number>(defaultMinutes);
     const [seconds, setSeconds] = useState<number>(defaultSeconds);
 
-    // При начале, в локалку отправить текущее время и конечное (текущее плюс время таймера)
-    // И каждый раз при перезагрузке, надо будет брать конечное и отнимать от него текущее и проверять, сколько времени осталось и осталось ли вообще
-
     /**
-const date = new Date();
+        const date = new Date();
 
-const seconds = Math.floor(date.getTime() / 1000)
+        const seconds = Math.floor(date.getTime() / 1000)
 
-console.log(new Date((seconds + 3600) * 1000))
+        console.log(new Date((seconds + 3600) * 1000))
 
-console.log(new Date())
-
+        console.log(new Date())
      */
 
     useEffect(() => {

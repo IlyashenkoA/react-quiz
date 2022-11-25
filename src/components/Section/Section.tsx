@@ -7,7 +7,8 @@ import RadioInput from "../RadioInput/RadioInput";
 import TextInput from "../TextInput/TextInput";
 import DragDrop from "../DragDrop/DragDrop";
 
-import { QuestionData, QUESTIONS, SaveDataHandle } from "../../types";
+import { QuestionData, QUESTIONS } from "../../types/data";
+import { SaveDataHandle } from "../../types/ref";
 
 import './Section.css';
 

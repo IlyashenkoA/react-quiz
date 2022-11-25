@@ -51,12 +51,3 @@ export type QuestionData =
 	| CheckboxQuestion
 	| RadioButtonQuestion
 	| DragAndDropQuestion;
-
-export type SaveDataHandle = {
-	saveData: () => void;
-};
-
-export enum ItemTypes {
-	BOX = 'box',
-	IMAGE = 'image',
-}

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import Timer, { StopTimerHandle } from '../Timer';
+import Timer, { StopTimerHandle } from '../Timer/Timer';
 import Button from '../Button/Button';
 import Intro from '../Intro/Intro';
 import Section from '../Section/Section';
 import Results from '../Results/Results';
 
-import { SaveDataHandle } from '../../types';
+import { SaveDataHandle } from '../../types/ref';
 import { RootState } from '../../store/reducers';
-import { LocalStorageKeys } from '../../store/types';
+import { LocalStorageKeys } from '../../types/localStorage';
 
 import './App.css';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 
-import { ItemTypes } from '../../../types';
+import { ItemTypes } from '../../../types/drag-drop';
 import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drag.css';

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { RadioButtonQuestion, SaveDataHandle } from "../../types";
+import { RadioButtonQuestion } from "../../types/data";
+import { SaveDataHandle } from "../../types/ref";
 
 const RadioInput = forwardRef<SaveDataHandle, RadioButtonQuestion>((props, ref) => {
     const { label, id } = props;

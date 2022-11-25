@@ -1,4 +1,4 @@
-import { IAnswer } from '../types';
+import { IAnswer } from '../types/reducer';
 import { ACTIONS } from './../types/actions';
 
 export const addAnswer = (answer: IAnswer) => {

@@ -1,11 +1,14 @@
 import { data } from '../../api/data';
 
-import { IQuizState, IQuizAction, LocalStorageKeys } from '../types';
+import { IQuizState, IQuizAction } from '../types/reducer';
+import { LocalStorageKeys } from '../../types/localStorage';
 import { ACTIONS } from '../types/actions';
 
 const initialState: IQuizState = {
 	data: data,
-	answers: localStorage.getItem(LocalStorageKeys.QUIZ_ANSWERS) ? JSON.parse(localStorage.getItem(LocalStorageKeys.QUIZ_ANSWERS)!) : [],
+	answers: localStorage.getItem(LocalStorageKeys.QUIZ_ANSWERS)
+		? JSON.parse(localStorage.getItem(LocalStorageKeys.QUIZ_ANSWERS)!)
+		: [],
 };
 
 export const QuizReducer = (state = initialState, action: IQuizAction) => {
@@ -14,7 +17,10 @@ export const QuizReducer = (state = initialState, action: IQuizAction) => {
 			const newArray = [...state.answers];
 			newArray.splice(action.payload.id, 1, action.payload);
 
-			localStorage.setItem(LocalStorageKeys.QUIZ_ANSWERS, JSON.stringify(newArray));
+			localStorage.setItem(
+				LocalStorageKeys.QUIZ_ANSWERS,
+				JSON.stringify(newArray)
+			);
 
 			return {
 				...state,

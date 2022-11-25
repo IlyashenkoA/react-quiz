@@ -5,7 +5,8 @@ import { isImage } from "../../assets/js/utils/Image";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { TextQuestion, SaveDataHandle } from "../../types";
+import { TextQuestion } from "../../types/data";
+import { SaveDataHandle } from "../../types/ref";
 
 import './TextInput.css';
 

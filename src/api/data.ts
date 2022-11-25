@@ -1,4 +1,4 @@
-import { QUESTIONS, QuestionData } from '../types';
+import { QUESTIONS, QuestionData } from '../types/data';
 
 export const config = {
 	title: 'Sport Quiz',

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Drag from "./Drag/Drag";
 import Drop from "./Drop/Drop";
 
-import { DragAndDropQuestion, SaveDataHandle } from "../../types";
-import { DragDropId } from "../../store/types";
+import { DragAndDropQuestion } from "../../types/data";
+import { SaveDataHandle } from "../../types/ref";
+import { DragDropId } from "../../store/types/reducer";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 

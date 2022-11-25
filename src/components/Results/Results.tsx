@@ -1,4 +1,4 @@
-import { QuestionData, QUESTIONS } from "../../types";
+import { QuestionData, QUESTIONS } from "../../types/data";
 
 import './Results.css';
 

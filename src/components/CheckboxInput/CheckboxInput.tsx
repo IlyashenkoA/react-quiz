@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { CheckboxQuestion, SaveDataHandle } from "../../types";
+import { CheckboxQuestion } from "../../types/data";
+import { SaveDataHandle } from "../../types/ref";
 
 const getEmptyArray = (label: string[]) => {
     return Array.from({ length: label.length }, () => '');

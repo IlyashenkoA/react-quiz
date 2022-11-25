@@ -1,4 +1,4 @@
-import { LocalStorageKeys } from "../../../store/types";
+import { LocalStorageKeys } from "../../../types/localStorage";
 
 export const clearLocalStorage = () => {
     localStorage.removeItem(LocalStorageKeys.QUIZ_ANSWERS);

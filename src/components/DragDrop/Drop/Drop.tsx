@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { ItemTypes } from '../../../types';
+import { ItemTypes } from '../../../types/drag-drop';
 import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drop.css';
-import { DragDropId } from '../../../store/types';
+import { DragDropId } from '../../../store/types/reducer';
 
 interface DropProps {
     label: string;

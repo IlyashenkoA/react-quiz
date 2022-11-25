@@ -1,5 +1,5 @@
 import { ACTIONS } from './actions';
-import { QuestionData } from '../../types';
+import { QuestionData } from '../../types/data';
 
 export interface IQuizState {
 	data: QuestionData[];
@@ -20,11 +20,4 @@ export interface DragDropId {
 	dragId: number;
 	dragLabel: string;
 	dropId: number;
-}
-
-export enum LocalStorageKeys {
-	QUIZ_ANSWERS = 'QUIZ_ANSWERS',
-	QUIZ_STARTED = 'QUIZ_STARTED',
-	QUIZ_FINISHED = 'QUIZ_FINISHED',
-	QUIZ_TIMER = 'QUIZ_TIMER'
 }
