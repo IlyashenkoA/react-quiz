@@ -8,7 +8,7 @@ import {
 import { DragDropId, IAnswer } from '../../../store/types/reducer';
 
 export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
-	let scores = Array.from(data, (item) => ({ id: item.id, scores: -1 }));
+	let scores = Array.from(data, (item) => ({ id: item.id, scores: 0 }));
 
 	answers.map((item) => {
 		if (data[item.id - 1].type === QUESTIONS.TEXT) {
