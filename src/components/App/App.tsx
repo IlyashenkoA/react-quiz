@@ -11,11 +11,12 @@ import { SaveDataHandle } from '../../types/ref';
 import { RootState } from '../../store/reducers';
 import { LocalStorageKeys } from '../../types/localStorage';
 
+import { clearLocalStorage } from '../../assets/js/utils/LocalStorage';
+
 import './App.css';
 
 const App: React.FC = () => {
   const [questionId, setQuestionId] = useState<number>(0);
-  const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [isFinished, setIsFinished] = useState<boolean>(false);
 
   const timerRef = useRef<StopTimerHandle>(null);
@@ -33,7 +34,7 @@ const App: React.FC = () => {
 
   const onNextClick = () => {
     if (questionId === 0) {
-      setHasStarted(true);
+      localStorage.setItem(LocalStorageKeys.QUIZ_STARTED, 'true');
     }
 
     setQuestionId(prev => prev + 1);
@@ -41,25 +42,32 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem(LocalStorageKeys.QUIZ_ANSWERS)) {
+    if (localStorage.getItem(LocalStorageKeys.QUIZ_STARTED) && !localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
       setQuestionId(1);
     }
 
-    if (localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED) && JSON.parse(localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)!) === true) {
+    if (localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
       setQuestionId(data.length + 1);
+      setIsFinished(true);
     }
   }, []);
 
   useEffect(() => {
     if (questionId === data.length + 1) {
       timerRef.current && timerRef.current.stopTimer();
+
       setIsFinished(true);
+      localStorage.setItem(LocalStorageKeys.QUIZ_FINISHED, 'true');
+
+      localStorage.removeItem(LocalStorageKeys.QUIZ_STARTED);
     }
   }, [questionId]);
 
   const onPreviousClick = () => {
     if (isFinished) {
-      setQuestionId(prev => prev - 1);
+      clearLocalStorage();
+      setIsFinished(false);
+      setQuestionId(0);
     } else {
       setQuestionId(prev => prev - 1);
       inputRef.current?.saveData();
@@ -73,14 +81,14 @@ const App: React.FC = () => {
 
     if (questionId === data.length && !isFinished) return 'Finish';
 
-    return 'Next Question;';
+    return 'Next Question';
   };
 
   return (
     <div className="container">
       <nav className='nav'>
         <div className='nav__timer'>
-          {questionId > 0 && !isFinished ? <Timer ref={timerRef} setIsFinished={setIsFinished} /> : null}
+          {questionId > 0 && !isFinished ? <Timer ref={timerRef} setIsFinished={setIsFinished} setQuestionId={setQuestionId} /> : null}
         </div>
         <ul className='nav__button-group'>
           {questionId > 0 && data.map((item, index) => {
@@ -94,10 +102,10 @@ const App: React.FC = () => {
         </ul>
       </nav>
       <main>
-        {isFinished && questionId === data.length + 1 ? <Results data={data} /> : questionId === 0 ? <Intro /> : <Section data={data[questionId - 1]} inputRef={inputRef} />}
+        {isFinished && questionId === data.length + 1 ? <Results data={data} /> : questionId === 0 ? <Intro /> : <Section data={data[questionId - 1]} inputRef={inputRef} isFinished={isFinished}/>}
       </main>
       <div className='control'>
-        {questionId > 1 && <Button label={'Previous question'} value='previousQuestion' onClick={onPreviousClick} />}
+        {questionId > 1 && <Button label={isFinished && questionId === data.length + 1 ? 'Repeat' : 'Previous question'} value='previousQuestion' onClick={onPreviousClick} />}
         {questionId < data.length + 1 ? <Button label={getButtonLabel()} value='nextQuestion' onClick={onNextClick} /> : null}
       </div>
     </div>

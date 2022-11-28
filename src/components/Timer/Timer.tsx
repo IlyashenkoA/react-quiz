@@ -1,6 +1,14 @@
-import { useEffect, useState, forwardRef, useImperativeHandle, SetStateAction, Dispatch } from "react";
+import {
+    useEffect,
+    useState,
+    forwardRef,
+    useImperativeHandle,
+    SetStateAction,
+    Dispatch
+} from "react";
 
-import { config } from "../../api/data";
+import { config, data } from "../../api/data";
+import { LocalStorageKeys } from "../../types/localStorage";
 
 export type StopTimerHandle = {
     stopTimer: () => void;
@@ -8,6 +16,7 @@ export type StopTimerHandle = {
 
 interface TimerProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
+    setQuestionId: Dispatch<SetStateAction<number>>
 }
 
 interface CurrentTimeProps {
@@ -26,18 +35,45 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
     const [minutes, setMinutes] = useState<number>(defaultMinutes);
     const [seconds, setSeconds] = useState<number>(defaultSeconds);
 
-    /**
-        const date = new Date();
-
-        const seconds = Math.floor(date.getTime() / 1000)
-
-        console.log(new Date((seconds + 3600) * 1000))
-
-        console.log(new Date())
-     */
-
     useEffect(() => {
         const { setIsFinished } = props;
+        const date = new Date();
+
+        if (localStorage.getItem(LocalStorageKeys.QUIZ_TIMER)) {
+            const seconds = localStorage.getItem(LocalStorageKeys.QUIZ_TIMER)!;
+
+            const currentTime = Math.floor(date.getTime() / 1000);
+            const remainingTime = +seconds - currentTime;
+
+            if (remainingTime < 0) {
+                setIsFinished(true);
+                localStorage.setItem(LocalStorageKeys.QUIZ_FINISHED, 'true');
+
+                return;
+            }
+
+            if (remainingTime > 0 && remainingTime < 3600) {
+                setMinutes(Math.floor(remainingTime / 60));
+                setSeconds(remainingTime % 60);
+            } else {
+                setHours(Math.floor(remainingTime / 3600));
+                setMinutes(Math.floor((remainingTime % 3600) / 60));
+                setSeconds(remainingTime % 60);
+            }
+
+            return;
+        }
+
+        const startTime = Math.floor(date.getTime() / 1000);
+        const remainingTime = (hours * 3600) + (minutes * 60) + seconds;
+        const totalTime = startTime + remainingTime;
+
+        localStorage.setItem(LocalStorageKeys.QUIZ_TIMER, totalTime.toString());
+
+    }, []);
+
+    useEffect(() => {
+        const { setIsFinished, setQuestionId } = props;
 
         let myInterval = setInterval(() => {
             if (seconds > 0) {
@@ -62,6 +98,9 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
 
         if (seconds === 0 && minutes === 0 && hours === 0) {
             setIsFinished(true);
+            setQuestionId(data.length + 1);
+
+            localStorage.setItem(LocalStorageKeys.QUIZ_FINISHED, 'true');
         }
 
         return () => {

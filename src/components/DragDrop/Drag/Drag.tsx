@@ -9,9 +9,10 @@ import './Drag.css';
 interface DragProps {
     label: string;
     id: number;
+    isFinished: boolean;
 }
 
-const Drag: React.FC<DragProps> = React.memo(({ label, id }) => {
+const Drag: React.FC<DragProps> = React.memo(({ label, id, isFinished }) => {
     const [{ }, drag] = useDrag(() => ({
         type: isImage(label) ? ItemTypes.IMAGE : ItemTypes.BOX,
         item: { label },
@@ -22,6 +23,9 @@ const Drag: React.FC<DragProps> = React.memo(({ label, id }) => {
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
+        canDrag: () => {
+            return !isFinished;
+        }
     }), [label]);
 
     return (

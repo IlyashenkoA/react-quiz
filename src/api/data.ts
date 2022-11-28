@@ -7,8 +7,8 @@ export const config = {
 		'Often you can hear many people impersonating themselves as "sports gurus". You may have ever impersonated one. Take this test to see what your sports knowledge is.',
 	timer: {
 		defaultHours: 0,
-		defaultMinutes: 30,
-		defaultSeconds: 0,
+		defaultMinutes: 0,
+		defaultSeconds: 10,
 	},
 };
 

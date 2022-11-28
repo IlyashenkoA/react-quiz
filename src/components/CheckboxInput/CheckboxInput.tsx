@@ -1,18 +1,33 @@
-import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { 
+    ChangeEvent, 
+    forwardRef, 
+    useEffect, 
+    useImperativeHandle, 
+    useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
+import { QUESTIONS } from "../../types/data";
 
-import { CheckboxQuestion } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 const getEmptyArray = (label: string[]) => {
     return Array.from({ length: label.length }, () => '');
 };
 
-const CheckboxInput = forwardRef<SaveDataHandle, CheckboxQuestion>((props, ref) => {
-    const { label, id } = props;
+interface CheckboxInputProps {
+    id: number;
+	question: string;
+	label: string[];
+	img?: string;
+	answer: string[];
+	type: QUESTIONS.CHECKBOX;
+    isFinished: boolean;
+}
+
+const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref) => {
+    const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
     const savedAnswers = useSelector((state: RootState) => {
@@ -55,7 +70,7 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxQuestion>((props, ref) 
                 return (
                     <li key={index.toString()}>
                         <label htmlFor={index.toString()}>{item}</label>
-                        <input type="checkbox" name={item} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} />
+                        <input type="checkbox" name={item} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} disabled={isFinished} />
                     </li>
                 );
             }) : null}

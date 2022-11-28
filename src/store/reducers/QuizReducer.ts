@@ -15,7 +15,7 @@ export const QuizReducer = (state = initialState, action: IQuizAction) => {
 	switch (action.type) {
 		case ACTIONS.ADD_ANSWER:
 			const newArray = [...state.answers];
-			newArray.splice(action.payload.id, 1, action.payload);
+			newArray.splice(action.payload.id - 1, 1, action.payload);
 
 			localStorage.setItem(
 				LocalStorageKeys.QUIZ_ANSWERS,

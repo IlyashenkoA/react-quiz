@@ -22,7 +22,7 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
             canDrop: monitor.canDrop(),
         }),
         drop: (item: unknown) => onDrop(item),
-    }));
+    }), [label]);
 
     const isActive = canDrop && isOver;
 

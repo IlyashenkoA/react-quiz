@@ -1,14 +1,31 @@
-import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+    ChangeEvent,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState
+} from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { RadioButtonQuestion } from "../../types/data";
+import { QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
-const RadioInput = forwardRef<SaveDataHandle, RadioButtonQuestion>((props, ref) => {
-    const { label, id } = props;
+interface RadioInputProps {
+    id: number;
+    question: string;
+    label: string[];
+    img?: string;
+    answer: string[];
+    type: QUESTIONS.RADIO;
+    isFinished: boolean;
+}
+
+const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
+    const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
     const savedAnswers = useSelector((state: RootState) => {
@@ -51,7 +68,7 @@ const RadioInput = forwardRef<SaveDataHandle, RadioButtonQuestion>((props, ref) 
                 return (
                     <li key={index.toString()}>
                         <label htmlFor={index.toString()}>{item}</label>
-                        <input type="radio" name={`radio-${id}`} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} />
+                        <input type="radio" name={`radio-${id}`} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} disabled={isFinished} />
                     </li>
                 );
             }) : null}

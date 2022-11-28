@@ -5,33 +5,33 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import CheckboxInput from "../CheckboxInput/CheckboxInput";
 import RadioInput from "../RadioInput/RadioInput";
 import TextInput from "../TextInput/TextInput";
-import DragDrop from "../DragDrop/DragDrop";
+import DragAndDrop from "../DragDrop/DragDrop";
 
 import { QuestionData, QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import './Section.css';
 
-const getInput = (data: QuestionData, inputRef: Ref<SaveDataHandle> | undefined) => {
+const getInput = (data: QuestionData, inputRef: Ref<SaveDataHandle> | undefined, isFinished: boolean) => {
     const { type } = data;
 
     switch (type) {
         case QUESTIONS.TEXT:
             return (
-                <TextInput {...data} ref={inputRef} />
+                <TextInput {...data} ref={inputRef} isFinished={isFinished} />
             );
         case QUESTIONS.CHECKBOX:
             return (
-                <CheckboxInput {...data} ref={inputRef} />
+                <CheckboxInput {...data} ref={inputRef} isFinished={isFinished} />
             );
         case QUESTIONS.RADIO:
             return (
-                <RadioInput {...data} ref={inputRef} />
+                <RadioInput {...data} ref={inputRef} isFinished={isFinished} />
             );
 
         case QUESTIONS.DRAG_AND_DROP:
             return (
-                <DragDrop {...data} ref={inputRef} />
+                <DragAndDrop {...data} ref={inputRef} isFinished={isFinished} />
             );
     }
 };
@@ -39,9 +39,10 @@ const getInput = (data: QuestionData, inputRef: Ref<SaveDataHandle> | undefined)
 interface SectionProps {
     data: QuestionData;
     inputRef: RefObject<SaveDataHandle>;
+    isFinished: boolean;
 }
 
-const Section: React.FC<SectionProps> = ({ data, inputRef }) => {
+const Section: React.FC<SectionProps> = ({ data, inputRef, isFinished }) => {
     if (data) {
         const { question, id, img } = data;
 
@@ -52,7 +53,7 @@ const Section: React.FC<SectionProps> = ({ data, inputRef }) => {
                     <article>
                         <p>{question}</p>
                         {img ? <img src={img}></img> : null}
-                        {getInput(data, inputRef)}
+                        {getInput(data, inputRef, isFinished)}
                     </article>
                 </section>
             </DndProvider>

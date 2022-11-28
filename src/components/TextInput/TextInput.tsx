@@ -1,11 +1,17 @@
-import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+    ChangeEvent,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isImage } from "../../assets/js/utils/Image";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { TextQuestion } from "../../types/data";
+import { QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import './TextInput.css';
@@ -14,8 +20,18 @@ const getEmptyArray = (label: string[] | undefined) => {
     return label ? Array.from({ length: label.length }, () => '') : [''];
 };
 
-const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
-    const { label, id } = props;
+interface TextInputProps {
+    id: number;
+    question: string;
+    label?: string[];
+    img?: string;
+    answer: string[];
+    type: QUESTIONS.TEXT;
+    isFinished: boolean;
+}
+
+const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
+    const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
     const savedAnswers = useSelector((state: RootState) => {
@@ -64,8 +80,8 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
                 {label.map((item, index) => {
                     return (
                         <li key={index.toString()}>
-                            <label htmlFor={index.toString()}>{isImage(item) ? <img src={item}/> : item}</label>
-                            <input type="text" id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} />
+                            <label htmlFor={index.toString()}>{isImage(item) ? <img src={item} /> : item}</label>
+                            <input type="text" id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} disabled={isFinished} />
                         </li>
                     );
                 })}
@@ -74,7 +90,7 @@ const TextInput = forwardRef<SaveDataHandle, TextQuestion>((props, ref) => {
     }
 
     return (
-        <input type="text" id="0" onChange={onInputChange} value={answer[0]} />
+        <input type="text" id="0" onChange={onInputChange} value={answer[0]} disabled={isFinished} />
     );
 });
 

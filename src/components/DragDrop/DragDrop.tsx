@@ -1,10 +1,15 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Drag from "./Drag/Drag";
 import Drop from "./Drop/Drop";
 
-import { DragAndDropQuestion } from "../../types/data";
+import { QUESTIONS, DragDrop } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 import { DragDropId } from "../../store/types/reducer";
 import { addAnswer } from "../../store/action-creators/action-creators";
@@ -12,6 +17,15 @@ import { RootState } from "../../store/reducers";
 
 import './DragDrop.css';
 
+interface DragDropInput {
+    id: number;
+	question: string;
+	img?: never;
+	drop: DragDrop[];
+	drag: DragDrop[];
+	type: QUESTIONS.DRAG_AND_DROP;
+    isFinished: boolean;
+}
 export interface handleDropProps {
     dragItem: DragLabel;
     dropId: number;
@@ -21,15 +35,14 @@ interface DragLabel {
     label: string;
 }
 
-const getEmptyArray = (data: DragAndDropQuestion) => {
+const getEmptyArray = (data: DragDropInput) => {
     const { drop } = data;
 
     return Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
 };
 
-
-const DragDrop = forwardRef<SaveDataHandle, DragAndDropQuestion>((data, ref) => {
-    const { drag, drop, id } = data;
+const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
+    const { drag, drop, id,isFinished } = data;
 
     const [answer, setAnswer] = useState<DragDropId[]>(getEmptyArray(data));
     const dispatch = useDispatch();
@@ -100,7 +113,7 @@ const DragDrop = forwardRef<SaveDataHandle, DragAndDropQuestion>((data, ref) => 
             <div className="drag-container">
                 {drag.map((item) => {
                     return (
-                        <Drag label={item.label} id={item.id} key={item.id} />
+                        <Drag label={item.label} id={item.id} key={item.id} isFinished={isFinished} />
                     );
                 })}
             </div>
@@ -108,4 +121,4 @@ const DragDrop = forwardRef<SaveDataHandle, DragAndDropQuestion>((data, ref) => 
     );
 });
 
-export default DragDrop;
+export default DragAndDrop;
