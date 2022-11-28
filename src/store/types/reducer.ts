@@ -13,7 +13,7 @@ export interface IQuizAction {
 
 export interface IAnswer {
 	id: number;
-	answer: string[] | DragDropId[]
+	answer: string[] | DragDropId[];
 }
 
 export interface DragDropId {

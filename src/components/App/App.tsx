@@ -102,7 +102,7 @@ const App: React.FC = () => {
         </ul>
       </nav>
       <main>
-        {isFinished && questionId === data.length + 1 ? <Results data={data} /> : questionId === 0 ? <Intro /> : <Section data={data[questionId - 1]} inputRef={inputRef} isFinished={isFinished}/>}
+        {isFinished && questionId === data.length + 1 ? <Results data={data} /> : questionId === 0 ? <Intro /> : <Section data={data[questionId - 1]} inputRef={inputRef} isFinished={isFinished} />}
       </main>
       <div className='control'>
         {questionId > 1 && <Button label={isFinished && questionId === data.length + 1 ? 'Repeat' : 'Previous question'} value='previousQuestion' onClick={onPreviousClick} />}

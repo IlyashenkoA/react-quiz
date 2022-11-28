@@ -1,16 +1,18 @@
-import { 
-    ChangeEvent, 
-    forwardRef, 
-    useEffect, 
-    useImperativeHandle, 
-    useState } from "react";
+import {
+    ChangeEvent,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
-import { QUESTIONS } from "../../types/data";
 
+import { QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
+
 
 const getEmptyArray = (label: string[]) => {
     return Array.from({ length: label.length }, () => '');
@@ -18,11 +20,11 @@ const getEmptyArray = (label: string[]) => {
 
 interface CheckboxInputProps {
     id: number;
-	question: string;
-	label: string[];
-	img?: string;
-	answer: string[];
-	type: QUESTIONS.CHECKBOX;
+    question: string;
+    label: string[];
+    img?: string;
+    answer: string[];
+    type: QUESTIONS.CHECKBOX;
     isFinished: boolean;
 }
 

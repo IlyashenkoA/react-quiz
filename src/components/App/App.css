@@ -55,5 +55,5 @@
 .control > button:only-child {
   position: absolute;
   right: 0;
-  margin: 1.5em
+  margin: 1.5em;
 }

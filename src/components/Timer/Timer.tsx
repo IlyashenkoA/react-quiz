@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import { config, data } from "../../api/data";
+
 import { LocalStorageKeys } from "../../types/localStorage";
 
 export type StopTimerHandle = {

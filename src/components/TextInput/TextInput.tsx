@@ -6,13 +6,14 @@ import {
     useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isImage } from "../../assets/js/utils/Image";
 
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
 import { QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
+
+import { isImage } from "../../assets/js/utils/Image";
 
 import './TextInput.css';
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../store/reducers";
+
 import { QuestionData, QUESTIONS } from "../../types/data";
 
 import { getQuizResults } from "../../assets/js/utils/Validation";

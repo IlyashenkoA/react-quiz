@@ -2,10 +2,11 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 
 import { ItemTypes } from '../../../types/drag-drop';
+import { DragDropId } from '../../../store/types/reducer';
+
 import { isImage } from '../../../assets/js/utils/Image';
 
 import './Drop.css';
-import { DragDropId } from '../../../store/types/reducer';
 
 interface DropProps {
     label: string;
@@ -38,7 +39,7 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
         <div className='drop' id={id.toString()} ref={drop} style={{ backgroundColor: getBackgroundColor() }}>
             <span>{label}</span>
             {isActive ? <span>Release to drop</span> : null}
-            {lastDroppedItem.dragLabel ? isImage(lastDroppedItem.dragLabel) ? <img src={lastDroppedItem.dragLabel} /> : <span>{lastDroppedItem.dragLabel}</span>: null}
+            {lastDroppedItem.dragLabel ? isImage(lastDroppedItem.dragLabel) ? <img src={lastDroppedItem.dragLabel} /> : <span>{lastDroppedItem.dragLabel}</span> : null}
         </div>
     );
 });

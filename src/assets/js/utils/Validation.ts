@@ -14,7 +14,7 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 		if (data[item.id - 1].type === QUESTIONS.TEXT) {
 			const result = {
 				id: item.id,
-				scores: validateTextInput((data[item.id - 1] as TextQuestion), item),
+				scores: validateTextInput(data[item.id - 1] as TextQuestion, item),
 			};
 
 			scores.splice(index, 1, result);
@@ -23,7 +23,10 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 		if (data[item.id - 1].type === QUESTIONS.RADIO) {
 			const result = {
 				id: item.id,
-				scores: validateRadioInput((data[item.id - 1] as RadioButtonQuestion), item),
+				scores: validateRadioInput(
+					data[item.id - 1] as RadioButtonQuestion,
+					item
+				),
 			};
 
 			scores.splice(index, 1, result);
@@ -32,7 +35,10 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 		if (data[item.id - 1].type === QUESTIONS.CHECKBOX) {
 			const result = {
 				id: item.id,
-				scores: validateCheckboxInput((data[item.id - 1] as CheckboxQuestion), item),
+				scores: validateCheckboxInput(
+					data[item.id - 1] as CheckboxQuestion,
+					item
+				),
 			};
 
 			scores.splice(index, 1, result);
