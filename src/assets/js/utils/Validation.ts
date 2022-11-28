@@ -8,7 +8,7 @@ import {
 import { DragDropId, IAnswer } from '../../../store/types/reducer';
 
 export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
-	let scores = Array.from(answers, (item) => ({ id: item.id, scores: -1 }));
+	let scores = Array.from(data, (item) => ({ id: item.id, scores: -1 }));
 
 	answers.map((item, index) => {
 		if (data[item.id - 1].type === QUESTIONS.TEXT) {
@@ -17,7 +17,7 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 				scores: validateTextInput(data[item.id - 1] as TextQuestion, item),
 			};
 
-			scores.splice(index, 1, result);
+			scores.splice(item.id - 1, 1, result);
 		}
 
 		if (data[item.id - 1].type === QUESTIONS.RADIO) {
@@ -29,7 +29,7 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 				),
 			};
 
-			scores.splice(index, 1, result);
+			scores.splice(item.id - 1, 1, result);
 		}
 
 		if (data[item.id - 1].type === QUESTIONS.CHECKBOX) {
@@ -41,7 +41,7 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 				),
 			};
 
-			scores.splice(index, 1, result);
+			scores.splice(item.id - 1, 1, result);
 		}
 
 		if (data[item.id - 1].type === QUESTIONS.DRAG_AND_DROP) {
@@ -50,7 +50,7 @@ export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 				scores: validateDragDrop(item),
 			};
 
-			scores.splice(index, 1, result);
+			scores.splice(item.id - 1, 1, result);
 		}
 	});
 

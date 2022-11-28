@@ -33,6 +33,7 @@ const Results: React.FC<ResultsProps> = ({ data }) => {
         const results = getQuizResults(answers, data);
 
         results.map((item) => {
+            if (item.scores === -1) return scores += 0;
             scores += item.scores;
         });
 
@@ -61,7 +62,7 @@ const Results: React.FC<ResultsProps> = ({ data }) => {
                         <li className="table-row" key={item.id}>
                             <div className="col col-1" data-label="Question">{`${item.id}. Question`}</div>
                             <div className="col col-2" data-label="Total Points">{item.type === QUESTIONS.DRAG_AND_DROP ? item.drop.length : item.answer.length}</div>
-                            <div className="col col-3" data-label="Your points">{answerResults[item.id]?.scores ? answerResults[item.id].scores : 0}</div>
+                            <div className="col col-3" data-label="Your points">{answerResults[item.id - 1]?.scores && answerResults[item.id - 1].scores === -1 ? 0 : answerResults[item.id - 1].scores}</div>
                         </li>
                     );
                 })}
