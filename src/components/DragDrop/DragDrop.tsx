@@ -13,7 +13,7 @@ import { DragDropId } from "../../store/types/reducer";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS, DragDrop } from "../../types/data";
+import { QUESTIONS, DragDrop, DragAndDropQuestion } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import './DragDrop.css';
@@ -26,6 +26,11 @@ interface DragDropInput {
     drag: DragDrop[];
     type: QUESTIONS.DRAG_AND_DROP;
     isFinished: boolean;
+}
+
+interface ICorrectAnswer {
+    isFinished: boolean;
+    answer: DragDropId;
 }
 export interface handleDropProps {
     dragItem: DragLabel;
@@ -41,6 +46,20 @@ const getEmptyArray = (data: DragDropInput) => {
 
     return Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
 };
+
+const getAnswerResult = ({isFinished, answer}: ICorrectAnswer) => {
+    if (isFinished && answer.dragId === 0) return;
+
+    if(isFinished && answer.dragId === answer.dropId) {
+        return 'rgba(0,200,0,0.3)';
+    }
+
+    if(isFinished && answer.dragId !== answer.dropId) {
+        return 'rgba(255,0,0,0.3)';
+    }
+
+    return;
+}
 
 const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
     const { drag, drop, id, isFinished } = data;
@@ -107,7 +126,17 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
             <div className="drop-container">
                 {drop.map((item) => {
                     return (
-                        <Drop label={item.label} id={item.id} key={item.id} onDrop={(data) => handleDrop({ dragItem: data, dropId: item.id })} lastDroppedItem={getLastDroppedItemLabelById(item.id)} />
+                        <Drop
+                            label={item.label}
+                            id={item.id}
+                            key={item.id}
+                            onDrop={(data) => handleDrop({ dragItem: data, dropId: item.id })}
+                            lastDroppedItem={getLastDroppedItemLabelById(item.id)}
+                            backgroundColor={getAnswerResult({
+                                isFinished: isFinished,
+                                answer: getLastDroppedItemLabelById(item.id)
+                            })}
+                        />
                     );
                 })}
             </div>

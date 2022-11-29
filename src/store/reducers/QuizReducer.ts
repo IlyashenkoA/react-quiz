@@ -26,6 +26,11 @@ export const QuizReducer = (state = initialState, action: IQuizAction) => {
 				...state,
 				answers: newArray,
 			};
+		case ACTIONS.SET_EMPTY_ANSWERS:
+			return {
+				...state,
+				answers: [],
+			};
 		default:
 			return state;
 	}

@@ -13,9 +13,10 @@ interface DropProps {
     id: number;
     lastDroppedItem: DragDropId;
     onDrop: (arg: any) => void;
+    backgroundColor: string | undefined;
 }
 
-const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedItem }) => {
+const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedItem, backgroundColor }) => {
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [ItemTypes.BOX, ItemTypes.IMAGE],
         collect: (monitor) => ({
@@ -28,6 +29,8 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
     const isActive = canDrop && isOver;
 
     const getBackgroundColor = () => {
+        if (backgroundColor) return backgroundColor;
+
         if (isActive) {
             return '#d3d3d3';
         }

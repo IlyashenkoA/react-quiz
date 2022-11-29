@@ -10,13 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS } from "../../types/data";
+import { CheckboxQuestion, QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
-
-
-const getEmptyArray = (label: string[]) => {
-    return Array.from({ length: label.length }, () => '');
-};
 
 interface CheckboxInputProps {
     id: number;
@@ -28,16 +23,39 @@ interface CheckboxInputProps {
     isFinished: boolean;
 }
 
+interface ICorrectAnswer {
+    isFinished: boolean;
+    answer: string;
+    checked: boolean;
+    correctAnswers: CheckboxQuestion;
+}
+
+const getEmptyArray = (label: string[]) => {
+    return Array.from({ length: label.length }, () => '');
+};
+
+const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorrectAnswer) => {
+    if (isFinished && correctAnswers.answer.includes(answer) && checked) {
+        return 'rgba(0,200,0,0.3)';
+    }
+
+    if (isFinished && !correctAnswers.answer.includes(answer) && checked) {
+        return 'rgba(255,0,0,0.3)';
+    }
+
+    return;
+};
+
 const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref) => {
     const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
-    const savedAnswers = useSelector((state: RootState) => {
-        const answerArray = state.QuizReducer.answers;
+    const { answers, data } = useSelector((state: RootState) => {
+        return state.QuizReducer;
+    });
 
-        return answerArray.filter((item) => {
-            return item.id === id;
-        });
+    const savedAnswers = answers.filter((item) => {
+        return item.id === id;
     });
 
     useEffect(() => {
@@ -70,9 +88,24 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref
         <ul>
             {label ? label.map((item, index) => {
                 return (
-                    <li key={index.toString()}>
+                    <li key={index.toString()} style={{
+                        backgroundColor: getAnswerResult({
+                            isFinished: isFinished,
+                            answer: item,
+                            checked: answer.includes(item),
+                            correctAnswers: data[id - 1] as CheckboxQuestion,
+                        })
+                    }}>
                         <label htmlFor={index.toString()}>{item}</label>
-                        <input type="checkbox" name={item} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} disabled={isFinished} />
+                        <input
+                            type="checkbox"
+                            name={item}
+                            id={index.toString()}
+                            onChange={onInputChange}
+                            value={item}
+                            checked={answer.includes(item)}
+                            disabled={isFinished}
+                        />
                     </li>
                 );
             }) : null}

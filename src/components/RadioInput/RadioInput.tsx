@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS } from "../../types/data";
+import { QUESTIONS, RadioButtonQuestion } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 interface RadioInputProps {
@@ -24,16 +24,35 @@ interface RadioInputProps {
     isFinished: boolean;
 }
 
+interface ICorrectAnswer {
+    isFinished: boolean;
+    answer: string;
+    checked: boolean;
+    correctAnswers: RadioButtonQuestion;
+}
+
+const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorrectAnswer) => {
+    if (isFinished && correctAnswers.answer.includes(answer) && checked) {
+        return 'rgba(0,200,0,0.3)';
+    }
+
+    if (isFinished && !correctAnswers.answer.includes(answer) && checked) {
+        return 'rgba(255,0,0,0.3)';
+    }
+
+    return;
+};
+
 const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
     const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
-    const savedAnswers = useSelector((state: RootState) => {
-        const answerArray = state.QuizReducer.answers;
+    const { answers, data } = useSelector((state: RootState) => {
+        return state.QuizReducer;
+    });
 
-        return answerArray.filter((item) => {
-            return item.id === id;
-        });
+    const savedAnswers = answers.filter((item) => {
+        return item.id === id;
     });
 
     useEffect(() => {
@@ -66,9 +85,24 @@ const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
         <ul>
             {label ? label.map((item, index) => {
                 return (
-                    <li key={index.toString()}>
+                    <li key={index.toString()} style={{
+                        backgroundColor: getAnswerResult({
+                            isFinished: isFinished,
+                            answer: item,
+                            checked: answer.includes(item),
+                            correctAnswers: data[id - 1] as RadioButtonQuestion
+                        })
+                    }}>
                         <label htmlFor={index.toString()}>{item}</label>
-                        <input type="radio" name={`radio-${id}`} id={index.toString()} onChange={onInputChange} value={item} checked={answer.includes(item)} disabled={isFinished} />
+                        <input
+                            type="radio"
+                            name={`radio-${id}`}
+                            id={index.toString()}
+                            onChange={onInputChange}
+                            value={item}
+                            checked={answer.includes(item)}
+                            disabled={isFinished}
+                        />
                     </li>
                 );
             }) : null}

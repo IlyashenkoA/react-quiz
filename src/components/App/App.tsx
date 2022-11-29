@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Timer, { StopTimerHandle } from '../Timer/Timer';
 import Button from '../Button/Button';
@@ -9,6 +9,7 @@ import Results from '../Results/Results';
 
 import { SaveDataHandle } from '../../types/ref';
 import { RootState } from '../../store/reducers';
+import { setEmptyAnswers } from '../../store/action-creators/action-creators';
 import { LocalStorageKeys } from '../../types/localStorage';
 
 import { clearLocalStorage } from '../../assets/js/utils/LocalStorage';
@@ -22,14 +23,18 @@ const App: React.FC = () => {
   const timerRef = useRef<StopTimerHandle>(null);
   const inputRef = useRef<SaveDataHandle>(null);
 
-  const data = useSelector((state: RootState) => {
-    return state.QuizReducer.data;
+  const { data } = useSelector((state: RootState) => {
+    return state.QuizReducer;
   });
+
+  const dispatch = useDispatch();
 
   const onQuestionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setQuestionId(+e.currentTarget.value);
-    inputRef.current?.saveData();
 
+    if (!isFinished) {
+      inputRef.current?.saveData();
+    }
   };
 
   const onNextClick = () => {
@@ -38,7 +43,10 @@ const App: React.FC = () => {
     }
 
     setQuestionId(prev => prev + 1);
-    inputRef.current?.saveData();
+
+    if (!isFinished) {
+      inputRef.current?.saveData();
+    }
   };
 
   useEffect(() => {
@@ -65,7 +73,9 @@ const App: React.FC = () => {
 
   const onPreviousClick = () => {
     if (isFinished) {
+      dispatch(setEmptyAnswers());
       clearLocalStorage();
+
       setIsFinished(false);
       setQuestionId(0);
     } else {

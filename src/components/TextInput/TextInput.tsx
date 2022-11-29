@@ -10,16 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS } from "../../types/data";
+import { QuestionData, QUESTIONS, TextQuestion } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import { isImage } from "../../assets/js/utils/Image";
 
 import './TextInput.css';
-
-const getEmptyArray = (label: string[] | undefined) => {
-    return label ? Array.from({ length: label.length }, () => '') : [''];
-};
 
 interface TextInputProps {
     id: number;
@@ -31,16 +27,40 @@ interface TextInputProps {
     isFinished: boolean;
 }
 
+interface ICorrectAnswer {
+    isFinished: boolean;
+    answer: string;
+    correctAnswers: TextQuestion;
+    index: number;
+}
+
+const getEmptyArray = (label: string[] | undefined) => {
+    return label ? Array.from({ length: label.length }, () => '') : [''];
+};
+
+const getAnswerResult = ({ isFinished, answer, correctAnswers, index }: ICorrectAnswer) => {
+    if (isFinished && answer === correctAnswers.answer[index]) {
+        return 'rgba(0,200,0,0.3)';
+    }
+
+    if (isFinished && answer !== correctAnswers.answer[index] && answer !== '') {
+        return 'rgba(255,0,0,0.3)';
+    }
+
+    return;
+};
+
+
 const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
     const { label, id, isFinished } = props;
     const dispatch = useDispatch();
 
-    const savedAnswers = useSelector((state: RootState) => {
-        const answerArray = state.QuizReducer.answers;
+    const { answers, data } = useSelector((state: RootState) => {
+        return state.QuizReducer;
+    });
 
-        return answerArray.filter((item) => {
-            return item.id === id;
-        });
+    const savedAnswers = answers.filter((item) => {
+        return item.id === id;
     });
 
     useEffect(() => {
@@ -82,7 +102,19 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
                     return (
                         <li key={index.toString()}>
                             <label htmlFor={index.toString()}>{isImage(item) ? <img src={item} /> : item}</label>
-                            <input type="text" id={index.toString()} onChange={onInputChange} value={answer[index] ? answer[index] : ''} disabled={isFinished} />
+                            <input
+                                type="text"
+                                id={index.toString()}
+                                onChange={onInputChange}
+                                value={answer[index] ? answer[index] : ''}
+                                disabled={isFinished} style={{
+                                    backgroundColor: getAnswerResult({
+                                        isFinished: isFinished,
+                                        answer: answer[index],
+                                        correctAnswers: data[id - 1] as TextQuestion,
+                                        index: index
+                                    })
+                                }} />
                         </li>
                     );
                 })}
@@ -91,7 +123,20 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
     }
 
     return (
-        <input type="text" id="0" onChange={onInputChange} value={answer[0]} disabled={isFinished} />
+        <input
+            type="text"
+            id="0"
+            onChange={onInputChange}
+            value={answer[0]}
+            disabled={isFinished}
+            style={{
+                backgroundColor: getAnswerResult({
+                    isFinished: isFinished,
+                    answer: answer[0],
+                    correctAnswers: data[id - 1] as TextQuestion,
+                    index: 0
+                })
+            }} />
     );
 });
 

@@ -42,8 +42,6 @@ const Results: React.FC<ResultsProps> = ({ data }) => {
             return totalScores += item.answer.length;
         });
 
-        console.log(results);
-
         setTotalScores(totalScores);
         setTotalEarnedScores(scores);
         setAnswerResults(results);
