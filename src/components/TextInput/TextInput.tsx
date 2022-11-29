@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QuestionData, QUESTIONS, TextQuestion } from "../../types/data";
+import { QUESTIONS, TextQuestion } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import { isImage } from "../../assets/js/utils/Image";
@@ -50,7 +50,6 @@ const getAnswerResult = ({ isFinished, answer, correctAnswers, index }: ICorrect
     return;
 };
 
-
 const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
     const { label, id, isFinished } = props;
     const dispatch = useDispatch();
@@ -67,12 +66,14 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
         if (savedAnswers[0]) {
             const defaultValue = savedAnswers[0].answer as string[];
             setAnswer([...defaultValue]);
+
             return;
         }
 
         if (label) {
             const defaultValue = getEmptyArray(label);
             setAnswer([...defaultValue]);
+
             return;
         }
 

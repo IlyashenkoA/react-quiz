@@ -42,7 +42,11 @@ const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedIt
         <div className='drop' id={id.toString()} ref={drop} style={{ backgroundColor: getBackgroundColor() }}>
             <span>{label}</span>
             {isActive ? <span>Release to drop</span> : null}
-            {lastDroppedItem.dragLabel ? isImage(lastDroppedItem.dragLabel) ? <img src={lastDroppedItem.dragLabel} /> : <span>{lastDroppedItem.dragLabel}</span> : null}
+            {lastDroppedItem.dragLabel
+                ? isImage(lastDroppedItem.dragLabel)
+                    ? <img src={lastDroppedItem.dragLabel} />
+                    : <span>{lastDroppedItem.dragLabel}</span>
+                : null}
         </div>
     );
 });

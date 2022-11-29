@@ -98,7 +98,9 @@ const App: React.FC = () => {
     <div className="container">
       <nav className='nav'>
         <div className='nav__timer'>
-          {questionId > 0 && !isFinished ? <Timer ref={timerRef} setIsFinished={setIsFinished} setQuestionId={setQuestionId} /> : null}
+          {questionId > 0 && !isFinished
+            ? <Timer ref={timerRef} setIsFinished={setIsFinished} setQuestionId={setQuestionId} />
+            : null}
         </div>
         <ul className='nav__button-group'>
           {questionId > 0 && data.map((item, index) => {
@@ -108,15 +110,33 @@ const App: React.FC = () => {
               </li>
             );
           })}
-          {isFinished && <li><Button label='results' value={(data.length + 1).toString()} onClick={onQuestionClick} /></li>}
+          {isFinished && <li>
+            <Button label='results' value={(data.length + 1).toString()} onClick={onQuestionClick} />
+          </li>}
         </ul>
       </nav>
       <main>
-        {isFinished && questionId === data.length + 1 ? <Results data={data} /> : questionId === 0 ? <Intro /> : <Section data={data[questionId - 1]} inputRef={inputRef} isFinished={isFinished} />}
+        {isFinished && questionId === data.length + 1
+          ? <Results data={data} />
+          : questionId === 0
+            ? <Intro />
+            : <Section
+              data={data[questionId - 1]}
+              inputRef={inputRef}
+              isFinished={isFinished}
+            />
+        }
       </main>
       <div className='control'>
-        {questionId > 1 && <Button label={isFinished && questionId === data.length + 1 ? 'Repeat' : 'Previous question'} value='previousQuestion' onClick={onPreviousClick} />}
-        {questionId < data.length + 1 ? <Button label={getButtonLabel()} value='nextQuestion' onClick={onNextClick} /> : null}
+        {questionId > 1 &&
+          <Button
+            label={isFinished && questionId === data.length + 1 ? 'Repeat' : 'Previous question'}
+            value='previousQuestion'
+            onClick={onPreviousClick}
+          />}
+        {questionId < data.length + 1
+          ? <Button label={getButtonLabel()} value='nextQuestion' onClick={onNextClick} />
+          : null}
       </div>
     </div>
   );

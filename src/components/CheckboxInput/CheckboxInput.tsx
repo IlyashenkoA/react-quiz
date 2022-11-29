@@ -86,29 +86,31 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref
 
     return (
         <ul>
-            {label ? label.map((item, index) => {
-                return (
-                    <li key={index.toString()} style={{
-                        backgroundColor: getAnswerResult({
-                            isFinished: isFinished,
-                            answer: item,
-                            checked: answer.includes(item),
-                            correctAnswers: data[id - 1] as CheckboxQuestion,
-                        })
-                    }}>
-                        <label htmlFor={index.toString()}>{item}</label>
-                        <input
-                            type="checkbox"
-                            name={item}
-                            id={index.toString()}
-                            onChange={onInputChange}
-                            value={item}
-                            checked={answer.includes(item)}
-                            disabled={isFinished}
-                        />
-                    </li>
-                );
-            }) : null}
+            {label
+                ? label.map((item, index) => {
+                    return (
+                        <li key={index.toString()} style={{
+                            backgroundColor: getAnswerResult({
+                                isFinished: isFinished,
+                                answer: item,
+                                checked: answer.includes(item),
+                                correctAnswers: data[id - 1] as CheckboxQuestion,
+                            })
+                        }}>
+                            <label htmlFor={index.toString()}>{item}</label>
+                            <input
+                                type="checkbox"
+                                name={item}
+                                id={index.toString()}
+                                onChange={onInputChange}
+                                value={item}
+                                checked={answer.includes(item)}
+                                disabled={isFinished}
+                            />
+                        </li>
+                    );
+                })
+                : null}
         </ul>
     );
 });

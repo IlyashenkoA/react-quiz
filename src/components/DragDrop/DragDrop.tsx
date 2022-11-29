@@ -13,7 +13,7 @@ import { DragDropId } from "../../store/types/reducer";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS, DragDrop, DragAndDropQuestion } from "../../types/data";
+import { QUESTIONS, DragDrop } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import './DragDrop.css';
@@ -47,19 +47,19 @@ const getEmptyArray = (data: DragDropInput) => {
     return Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
 };
 
-const getAnswerResult = ({isFinished, answer}: ICorrectAnswer) => {
+const getAnswerResult = ({ isFinished, answer }: ICorrectAnswer) => {
     if (isFinished && answer.dragId === 0) return;
 
-    if(isFinished && answer.dragId === answer.dropId) {
+    if (isFinished && answer.dragId === answer.dropId) {
         return 'rgba(0,200,0,0.3)';
     }
 
-    if(isFinished && answer.dragId !== answer.dropId) {
+    if (isFinished && answer.dragId !== answer.dropId) {
         return 'rgba(255,0,0,0.3)';
     }
 
     return;
-}
+};
 
 const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
     const { drag, drop, id, isFinished } = data;
@@ -143,7 +143,12 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
             <div className="drag-container">
                 {drag.map((item) => {
                     return (
-                        <Drag label={item.label} id={item.id} key={item.id} isFinished={isFinished} />
+                        <Drag
+                            label={item.label}
+                            id={item.id}
+                            key={item.id}
+                            isFinished={isFinished}
+                        />
                     );
                 })}
             </div>

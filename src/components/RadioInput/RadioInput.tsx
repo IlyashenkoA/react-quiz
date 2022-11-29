@@ -83,29 +83,31 @@ const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
 
     return (
         <ul>
-            {label ? label.map((item, index) => {
-                return (
-                    <li key={index.toString()} style={{
-                        backgroundColor: getAnswerResult({
-                            isFinished: isFinished,
-                            answer: item,
-                            checked: answer.includes(item),
-                            correctAnswers: data[id - 1] as RadioButtonQuestion
-                        })
-                    }}>
-                        <label htmlFor={index.toString()}>{item}</label>
-                        <input
-                            type="radio"
-                            name={`radio-${id}`}
-                            id={index.toString()}
-                            onChange={onInputChange}
-                            value={item}
-                            checked={answer.includes(item)}
-                            disabled={isFinished}
-                        />
-                    </li>
-                );
-            }) : null}
+            {label
+                ? label.map((item, index) => {
+                    return (
+                        <li key={index.toString()} style={{
+                            backgroundColor: getAnswerResult({
+                                isFinished: isFinished,
+                                answer: item,
+                                checked: answer.includes(item),
+                                correctAnswers: data[id - 1] as RadioButtonQuestion
+                            })
+                        }}>
+                            <label htmlFor={index.toString()}>{item}</label>
+                            <input
+                                type="radio"
+                                name={`radio-${id}`}
+                                id={index.toString()}
+                                onChange={onInputChange}
+                                value={item}
+                                checked={answer.includes(item)}
+                                disabled={isFinished}
+                            />
+                        </li>
+                    );
+                })
+                : null}
         </ul>
     );
 });

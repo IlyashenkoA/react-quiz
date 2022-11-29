@@ -7,7 +7,17 @@ const Intro: React.FC = () => {
     const { defaultHours, defaultMinutes, defaultSeconds } = config.timer;
 
     const getTotalTime = () => {
-        return `${defaultHours > 0 ? defaultHours + ' hours' : ''} ${defaultMinutes > 0 ? defaultMinutes + ' minutes' : ''} ${defaultSeconds > 0 ? defaultSeconds + ' seconds' : ''}`;
+        return (
+            `${defaultHours > 0
+                ? defaultHours + ' hours'
+                : ''}
+            ${defaultMinutes > 0
+                ? defaultMinutes + ' minutes'
+                : ''}
+            ${defaultSeconds > 0
+                ? defaultSeconds + ' seconds'
+                : ''}`
+        );
     };
 
     return (

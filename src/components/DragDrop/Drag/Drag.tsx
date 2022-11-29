@@ -30,7 +30,11 @@ const Drag: React.FC<DragProps> = React.memo(({ label, id, isFinished }) => {
     }), [label]);
 
     return (
-        <div className='drag' id={id.toString()} ref={drag}>{isImage(label) ? <img src={label} /> : <span>{label}</span>}</div>
+        <div className='drag' id={id.toString()} ref={drag}>
+            {isImage(label)
+                ? <img src={label} />
+                : <span>{label}</span>}
+        </div>
     );
 });
 
