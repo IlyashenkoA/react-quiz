@@ -19,6 +19,7 @@ const Drag: React.FC<DragProps> = React.memo(({ label, id, isFinished }) => {
         item: { label },
         isDragging(monitor) {
             const item = monitor.getItem();
+
             return label === item.label;
         },
         collect: (monitor) => ({

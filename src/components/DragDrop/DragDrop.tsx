@@ -47,6 +47,9 @@ const getEmptyArray = (data: DragDropInput) => {
     return Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
 };
 
+/**
+ * In case if quiz was completed, show if the answer was correct or incorrect
+ */
 const getAnswerResult = ({ isFinished, answer }: ICorrectAnswer) => {
     if (isFinished && answer.dragId === 0) return;
 
@@ -75,15 +78,18 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
         });
     });
 
+    /**
+     * When move from question to question:
+     *  - If the answer has already been given, this data will be used
+     *  - Otherwise default value will be used
+     */
     useEffect(() => {
         if (savedAnswers[0]) {
             const defaultValue = savedAnswers[0].answer as DragDropId[];
             setAnswer([...defaultValue]);
+
             return;
         }
-
-        const defaultValue = getEmptyArray(data);
-        setAnswer([...defaultValue]);
     }, [id]);
 
     const handleDrop = ({ dragItem, dropId }: handleDropProps) => {

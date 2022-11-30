@@ -40,6 +40,13 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
         const { setIsFinished } = props;
         const date = new Date();
 
+        /**
+         *  - In case quiz was started get the remaining time from localStorage
+         *  - Get the current time in seconds
+         *  - Check the difference between the current time and and the time when the quiz should end
+         *  - If difference is negative, quiz is finished
+         *  - Otherwise get the remaining time in hours, minutes and seconds
+         */
         if (localStorage.getItem(LocalStorageKeys.QUIZ_TIMER)) {
             const seconds = localStorage.getItem(LocalStorageKeys.QUIZ_TIMER)!;
 
@@ -65,6 +72,11 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
             return;
         }
 
+        /**
+         *  - Get the current time in seconds
+         *  - Add timer time from config in seconds to the current time
+         *  - Save total time in localStorage
+         */
         const startTime = Math.floor(date.getTime() / 1000);
         const remainingTime = (hours * 3600) + (minutes * 60) + seconds;
         const totalTime = startTime + remainingTime;
@@ -118,7 +130,7 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
     }));
 
     return (
-        <div className="timer" style={{ color: hours === 0 && minutes <= 1 ? 'red' : 'black' }}>
+        <div className="timer" style={{ color: hours === 0 && minutes <= 1 ? '#FF0000' : '#000000' }}>
             {getRemainingTime({ hours: hours, minutes: minutes, seconds: seconds })}
         </div>
     );

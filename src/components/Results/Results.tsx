@@ -27,6 +27,12 @@ const Results: React.FC<ResultsProps> = ({ data }) => {
         return state.QuizReducer;
     });
 
+    /**
+     * When the quiz is completed:
+     *  - Calculate total scores for the quiz
+     *  - Calculate earned scores
+     *  - Get scores for each question
+     */
     useEffect(() => {
         let scores = 0;
         let totalScores = 0;

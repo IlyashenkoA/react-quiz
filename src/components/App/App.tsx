@@ -20,6 +20,9 @@ const App: React.FC = () => {
   const [questionId, setQuestionId] = useState<number>(0);
   const [isFinished, setIsFinished] = useState<boolean>(false);
 
+  /**
+   * Ref's are used to call child functions, when moving between questions to save answers in state or stop the timer
+   */
   const timerRef = useRef<StopTimerHandle>(null);
   const inputRef = useRef<SaveDataHandle>(null);
 
@@ -30,11 +33,11 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const onQuestionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setQuestionId(+e.currentTarget.value);
-
     if (!isFinished) {
       inputRef.current?.saveData();
     }
+
+    setQuestionId(+e.currentTarget.value);
   };
 
   const onNextClick = () => {
@@ -42,18 +45,24 @@ const App: React.FC = () => {
       localStorage.setItem(LocalStorageKeys.QUIZ_STARTED, 'true');
     }
 
-    setQuestionId(prev => prev + 1);
-
     if (!isFinished) {
       inputRef.current?.saveData();
     }
+
+    setQuestionId(prev => prev + 1);
   };
 
   useEffect(() => {
+    /**
+     * In case the quiz was started, but not completed, show first question
+     */
     if (localStorage.getItem(LocalStorageKeys.QUIZ_STARTED) && !localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
       setQuestionId(1);
     }
 
+    /**
+     * In case the quiz was completed, show results
+     */
     if (localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
       setQuestionId(data.length + 1);
       setIsFinished(true);
@@ -61,18 +70,29 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    /**
+     * In case the quiz was completed:
+     * - Stop the timer
+     * - Update the data in the localStorage that the quiz is over
+     */
     if (questionId === data.length + 1) {
-      timerRef.current && timerRef.current.stopTimer();
-
       setIsFinished(true);
+      timerRef.current && timerRef.current.stopTimer();
       localStorage.setItem(LocalStorageKeys.QUIZ_FINISHED, 'true');
-
       localStorage.removeItem(LocalStorageKeys.QUIZ_STARTED);
     }
   }, [questionId]);
 
   const onPreviousClick = () => {
-    if (isFinished) {
+    /**
+     * In case the quiz was completed and the button is used to retake the quiz:
+     *  - Answers in state are cleared
+     *  - LocalStorage is cleared
+     *  - Intro appears
+     *
+     * Otherwise, go to the previous question and save the answers
+     */
+    if (isFinished && questionId === data.length + 1) {
       dispatch(setEmptyAnswers());
       clearLocalStorage();
 

@@ -34,6 +34,9 @@ const getEmptyArray = (label: string[]) => {
     return Array.from({ length: label.length }, () => '');
 };
 
+/**
+ * In case if quiz was completed, show if the answer was correct or incorrect
+ */
 const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorrectAnswer) => {
     if (isFinished && correctAnswers.answer.includes(answer) && checked) {
         return 'rgba(0,200,0,0.3)';
@@ -48,6 +51,8 @@ const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorre
 
 const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref) => {
     const { label, id, isFinished } = props;
+
+    const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
     const dispatch = useDispatch();
 
     const { answers, data } = useSelector((state: RootState) => {
@@ -58,18 +63,19 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref
         return item.id === id;
     });
 
+    /**
+     * When move from question to question:
+     *  - If the answer has already been given, this data will be used
+     *  - Otherwise default value will be used
+     */
     useEffect(() => {
         if (savedAnswers[0]) {
             const defaultValue = savedAnswers[0].answer as string[];
             setAnswer([...defaultValue]);
+
             return;
         }
-
-        const defaultValue = [''];
-        setAnswer([...defaultValue]);
     }, [id]);
-
-    const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const array: string[] = answer;

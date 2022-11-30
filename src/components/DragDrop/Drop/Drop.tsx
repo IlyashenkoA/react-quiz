@@ -12,11 +12,11 @@ interface DropProps {
     label: string;
     id: number;
     lastDroppedItem: DragDropId;
-    onDrop: (arg: any) => void;
     backgroundColor: string | undefined;
+    onDrop: (arg: any) => void;
 }
 
-const Drop: React.FC<DropProps> = React.memo(({ label, id, onDrop, lastDroppedItem, backgroundColor }) => {
+const Drop: React.FC<DropProps> = React.memo(({ label, id, lastDroppedItem, backgroundColor, onDrop }) => {
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [ItemTypes.BOX, ItemTypes.IMAGE],
         collect: (monitor) => ({
