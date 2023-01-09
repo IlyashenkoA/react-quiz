@@ -1,16 +1,63 @@
-# React Quiz
-### This project is remix of the project - https://github.com/IlyashenkoA/Quiz-JS
+<h1 id="title">React Quiz</h1>
 
-### Demo is available here - https://ilyashenkoa.github.io/react-quiz/
+<p id="description">This project is a remix of a project built in pure HTML CSS and JS. In this project the emphasis was on reusing components for such types of questions as with text input checkbox input radio input and drag drops.</p>
 
-# Description
-### Technologies:
-* React
-* Typescript
-* Redux
-* React DND
+<h2>🚀 Demo</h2>
 
-This project is a remix of a project built in pure HTML, CSS and JS.
-In this project, the emphasis was on reusing components for such types of questions as with text input, checkbox input, radio input and drag drops.
+[https://ilyashenkoa.github.io/react-quiz/](https://ilyashenkoa.github.io/react-quiz/)
 
-Also, all data is stored in local storage, which allows you to continue the test in the event of a page refresh.
+<h2>Project Screenshots:</h2>
+
+<img src="https://i.imgur.com/NfrIeZ3.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/vw59ly4.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/27o3XQx.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/Ua1go3a.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/FGe9mQ0.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/4v5bwNA.png" alt="project-screenshot" width="800">
+
+<img src="https://i.imgur.com/alGBDjD.png" alt="project-screenshot" width="800">
+
+  
+  
+<h2>🧐 Features</h2>
+
+Here're some of the project's best features:
+
+*   if the test has started and the page has been closed it is possible to continue the test if the time has not expired
+*   Ability to use your own JSON file with questions and answers for the test if it corresponds to a certain structure
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the repository</p>
+
+```
+git clone https://github.com/IlyashenkoA/react-quiz.git
+```
+
+<p>2. Install all packages</p>
+
+```
+npm install
+```
+
+<p>3. Run the project</p>
+
+```
+npm run start
+```
+
+  
+  
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   React
+*   Redux
+*   TypeScript
+*   React DND
