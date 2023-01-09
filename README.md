@@ -28,8 +28,9 @@
 
 Here're some of the project's best features:
 
-*   if the test has started and the page has been closed it is possible to continue the test if the time has not expired
+*   If the test has started and the page has been closed it is possible to continue the test if the time has not expired
 *   Ability to use your own JSON file with questions and answers for the test if it corresponds to a certain structure
+*   At the end of the test, it will be seen which answers were correct and which were not
 
 <h2>🛠️ Installation Steps:</h2>
 
