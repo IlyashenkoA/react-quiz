@@ -1,6 +1,6 @@
 <h1 id="title">React Quiz</h1>
 
-<p id="description">This project is a remix of a project built in pure HTML CSS and JS. In this project the emphasis was on reusing components for such types of questions as with text input checkbox input radio input and drag drops.</p>
+<p id="description">This project is a simple online quiz developed on React. In this project the emphasis was on reusing components for such types of questions as with text input checkbox input radio input and drag drops. In the end, it is enough to create your own JSON file with questions and answers, paste it into the code and quiz will work.</p>
 
 <h2>🚀 Demo</h2>
 
