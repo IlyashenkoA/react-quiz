@@ -1,8 +1,13 @@
 body {
-  height: 100vh;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 
   background-image: url("assets/images/cool-background.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+#root,
+body {
+  min-width: 750px;
+  min-height: 100vh;
 }
