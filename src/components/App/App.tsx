@@ -20,12 +20,6 @@ const App: React.FC = () => {
   const [questionId, setQuestionId] = useState<number>(0);
   const [isFinished, setIsFinished] = useState<boolean>(false);
 
-  const [windowWidth, setWindowWidth] = useState<number | undefined>(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth;
-    }
-  });
-
   /**
    * Ref's are used to call child functions, when moving between questions to save answers in state or stop the timer
    */
@@ -64,10 +58,7 @@ const App: React.FC = () => {
   }, []);
 
   const resizeHandler = () => {
-    if (windowWidth !== window.innerWidth) {
-      getMobileViewPortUnits();
-      setWindowWidth(window.innerWidth);
-    }
+    getMobileViewPortUnits();
   };
 
   useEffect(() => {
