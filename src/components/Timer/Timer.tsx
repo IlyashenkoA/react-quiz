@@ -1,10 +1,10 @@
 import {
-    useEffect,
-    useState,
-    forwardRef,
-    useImperativeHandle,
+    Dispatch,
     SetStateAction,
-    Dispatch
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState
 } from "react";
 
 import { config, data } from "../../api/data";
@@ -17,7 +17,7 @@ export type StopTimerHandle = {
 
 interface TimerProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
-    setQuestionId: Dispatch<SetStateAction<number>>
+    setQuestionId: Dispatch<SetStateAction<number>>;
 }
 
 interface CurrentTimeProps {

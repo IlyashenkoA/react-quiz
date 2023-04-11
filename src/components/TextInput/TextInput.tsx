@@ -89,7 +89,7 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
 
     useImperativeHandle(ref, () => ({
         saveData() {
-            const result = { id: id, answer: answer };
+            const result = { id, answer };
             dispatch(addAnswer(result));
         }
     }));

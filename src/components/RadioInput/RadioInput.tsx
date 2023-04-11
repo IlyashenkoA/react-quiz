@@ -82,7 +82,7 @@ const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
 
     useImperativeHandle(ref, () => ({
         saveData() {
-            const result = { id: id, answer: answer };
+            const result = { id, answer };
             dispatch(addAnswer(result));
         }
     }));

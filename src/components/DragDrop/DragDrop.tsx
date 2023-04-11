@@ -124,7 +124,7 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
 
     useImperativeHandle(ref, () => ({
         saveData() {
-            const result = { id: id, answer: answer };
+            const result = { id, answer };
             dispatch(addAnswer(result));
         }
     }));

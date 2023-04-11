@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Timer, { StopTimerHandle } from '../Timer/Timer';
 import Button from '../Button/Button';
 import Intro from '../Intro/Intro';
-import Section from '../Section/Section';
 import Results from '../Results/Results';
+import Section from '../Section/Section';
+import Timer, { StopTimerHandle } from '../Timer/Timer';
 
-import { SaveDataHandle } from '../../types/ref';
-import { RootState } from '../../store/reducers';
 import { setEmptyAnswers } from '../../store/action-creators/action-creators';
+import { RootState } from '../../store/reducers';
 import { LocalStorageKeys } from '../../types/localStorage';
+import { SaveDataHandle } from '../../types/ref';
 
 import { clearLocalStorage } from '../../assets/js/utils/LocalStorage';
 
