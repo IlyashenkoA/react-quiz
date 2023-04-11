@@ -362,6 +362,7 @@ body {
 html,
 body {
   min-height: 100vh;
+  min-width: 700px;
 }
 
 #root {
@@ -369,4 +370,10 @@ body {
   place-items: center;
 
   padding: 4rem 0;
+}
+
+@media (min-width: 60rem) {
+  #root {
+    padding: 0;
+  }
 }
