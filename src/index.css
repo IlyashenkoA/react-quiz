@@ -366,6 +366,8 @@ body {
 }
 
 @media (orientation: portrait) {
+  #root,
+  html,
   body {
     height: calc(100 * var(--vh));
   }
