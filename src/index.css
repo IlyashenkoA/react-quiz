@@ -362,7 +362,6 @@ body {
 html,
 body {
   min-height: 100vh;
-  min-width: 700px;
 }
 
 #root {
@@ -372,7 +371,7 @@ body {
   padding: 4rem 0;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 60rem) and (orientation: landscape) {
   #root {
     padding: 0;
   }
