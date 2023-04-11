@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { ItemTypes } from '../../../types/drag-drop';
 import { DragDropId } from '../../../store/types/reducer';
+import { ItemTypes } from '../../../types/drag-drop';
 
 import { isImage } from '../../../assets/js/utils/Image';
 

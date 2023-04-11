@@ -1,10 +1,11 @@
 .drag-drop {
     display: flex;
-    flex-direction: row;
-    gap: 5em
+    flex-flow: row wrap;
+    gap: 5em;
 }
 
-.drag-container, .drop-container {
+.drag-container,
+.drop-container {
     display: grid;
     grid-template-columns: 7.5em 7.5em;
     grid-template-rows: 1fr 1fr;

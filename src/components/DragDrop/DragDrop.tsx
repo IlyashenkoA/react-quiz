@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Drag from "./Drag/Drag";
 import Drop from "./Drop/Drop";
 
-import { DragDropId } from "../../store/types/reducer";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
+import { DragDropId } from "../../store/types/reducer";
 
-import { QUESTIONS, DragDrop } from "../../types/data";
+import { DragDrop, QUESTIONS } from "../../types/data";
 import { SaveDataHandle } from "../../types/ref";
 
 import './DragDrop.css';
@@ -90,6 +90,8 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
 
             return;
         }
+
+        setAnswer(getEmptyArray(data));
     }, [id]);
 
     const handleDrop = ({ dragItem, dropId }: handleDropProps) => {
