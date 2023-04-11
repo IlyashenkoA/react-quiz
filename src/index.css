@@ -370,12 +370,4 @@ body {
 #root {
   display: grid;
   place-items: center;
-
-  padding: 4rem 0;
-}
-
-@media (min-width: 60rem) and (orientation: landscape) {
-  #root {
-    padding: 0;
-  }
 }
