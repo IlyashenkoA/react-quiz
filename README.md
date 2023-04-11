@@ -4,7 +4,7 @@
 
 <h2>🚀 Demo</h2>
 
-[https://ilyashenkoa.github.io/react-quiz/](https://ilyashenkoa.github.io/react-quiz/)
+[https://vercel.com/ilyashenkoa/react-quiz/BpFkQH7p1buwekwJZx864s9EUqPh](https://vercel.com/ilyashenkoa/react-quiz/BpFkQH7p1buwekwJZx864s9EUqPh)
 
 <h2>Project Screenshots:</h2>
 
