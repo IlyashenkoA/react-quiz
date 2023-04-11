@@ -11,8 +11,7 @@
 
   padding: 1.5em;
 
-  min-width: 450px;
-  width: 80%;
+  width: clamp(450px, 80%, 80rem);
 
   background-color: #ffffff;
   border-radius: 1rem;
