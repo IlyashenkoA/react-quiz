@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Button/Button';
@@ -19,6 +19,12 @@ import './App.css';
 const App: React.FC = () => {
   const [questionId, setQuestionId] = useState<number>(0);
   const [isFinished, setIsFinished] = useState<boolean>(false);
+
+  const [windowWidth, setWindowWidth] = useState<number | undefined>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth;
+    }
+  });
 
   /**
    * Ref's are used to call child functions, when moving between questions to save answers in state or stop the timer
@@ -52,11 +58,24 @@ const App: React.FC = () => {
     setQuestionId(prev => prev + 1);
   };
 
+  const getMobileViewPortUnits = useCallback(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, []);
+
+  const resizeHandler = () => {
+    if (windowWidth !== window.innerWidth) {
+      getMobileViewPortUnits();
+      setWindowWidth(window.innerWidth);
+    }
+  };
+
   useEffect(() => {
     /**
      * In case the quiz was started, but not completed, show first question
      */
-    if (localStorage.getItem(LocalStorageKeys.QUIZ_STARTED) && !localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
+    if (localStorage.getItem(LocalStorageKeys.QUIZ_STARTED)
+      && !localStorage.getItem(LocalStorageKeys.QUIZ_FINISHED)) {
       setQuestionId(1);
     }
 
@@ -67,6 +86,13 @@ const App: React.FC = () => {
       setQuestionId(data.length + 1);
       setIsFinished(true);
     }
+
+    getMobileViewPortUnits();
+    window.addEventListener('resize', resizeHandler);
+
+    return (() => {
+      window.removeEventListener('resize', resizeHandler);
+    });
   }, []);
 
   useEffect(() => {

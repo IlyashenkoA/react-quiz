@@ -362,6 +362,9 @@ body {
 html,
 body {
   min-height: 100vh;
+  min-width: 45rem;
+
+  height: calc(100 * var(--vh));
 }
 
 #root {

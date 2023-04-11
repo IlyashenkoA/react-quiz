@@ -8,7 +8,6 @@
 
   width: 80%;
   max-width: 80rem;
-  /* width: clamp(450px, 80%, 80rem); */
 
   background-color: #ffffff;
   border-radius: 1rem;
