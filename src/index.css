@@ -362,12 +362,11 @@ body {
 html,
 body {
   min-height: 100vh;
-  min-width: 600px;
 }
 
 #root {
   display: grid;
   place-items: center;
 
-  padding: 4rem;
+  padding: 4rem 0;
 }
