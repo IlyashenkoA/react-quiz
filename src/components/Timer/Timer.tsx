@@ -110,7 +110,9 @@ const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
             }
         }, 1000);
 
-        if (seconds === 0 && minutes === 0 && hours === 0) {
+        if (seconds === 0
+            && minutes === 0
+            && hours === 0) {
             setIsFinished(true);
             setQuestionId(data.length + 1);
 
