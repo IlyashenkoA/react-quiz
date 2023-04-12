@@ -132,7 +132,7 @@ const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
 
     return (
         <div className="timer" style={{ color: hours === 0 && minutes <= 1 ? '#FF0000' : '#000000' }}>
-            {getRemainingTime({ hours: hours, minutes: minutes, seconds: seconds })}
+            {getRemainingTime({ hours, minutes, seconds })}
         </div>
     );
 }));
