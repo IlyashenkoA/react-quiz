@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import Intro from '../Intro/Intro';
 import Results from '../Results/Results';
-import Section from '../Section/Section';
+import { Section } from '../Section/Section';
 import Timer, { StopTimerHandle } from '../Timer/Timer';
 
 import { setEmptyAnswers } from '../../store/action-creators/action-creators';
 import { RootState } from '../../store/reducers';
 import { LocalStorageKeys } from '../../types/localStorage';
-import { SaveDataHandle } from '../../types/ref';
 
 import { clearLocalStorage } from '../../assets/js/utils/LocalStorage';
 
@@ -24,7 +23,6 @@ const App: React.FC = () => {
    * Ref's are used to call child functions, when moving between questions to save answers in state or stop the timer
    */
   const timerRef = useRef<StopTimerHandle>(null);
-  const inputRef = useRef<SaveDataHandle>(null);
 
   const { data } = useSelector((state: RootState) => {
     return state.QuizReducer;
@@ -33,20 +31,12 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const onQuestionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!isFinished) {
-      inputRef.current?.saveData();
-    }
-
     setQuestionId(+e.currentTarget.value);
   };
 
   const onNextClick = () => {
     if (questionId === 0) {
       localStorage.setItem(LocalStorageKeys.QUIZ_STARTED, 'true');
-    }
-
-    if (!isFinished) {
-      inputRef.current?.saveData();
     }
 
     setQuestionId(prev => prev + 1);
@@ -117,7 +107,6 @@ const App: React.FC = () => {
       setQuestionId(0);
     } else {
       setQuestionId(prev => prev - 1);
-      inputRef.current?.saveData();
     }
   };
 
@@ -159,7 +148,6 @@ const App: React.FC = () => {
             ? <Intro />
             : <Section
               data={data[questionId - 1]}
-              inputRef={inputRef}
               isFinished={isFinished}
             />
         }

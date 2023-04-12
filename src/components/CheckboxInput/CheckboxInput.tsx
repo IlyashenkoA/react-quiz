@@ -1,8 +1,6 @@
 import {
     ChangeEvent,
-    forwardRef,
     useEffect,
-    useImperativeHandle,
     useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +9,6 @@ import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
 import { CheckboxQuestion, QUESTIONS } from "../../types/data";
-import { SaveDataHandle } from "../../types/ref";
 
 interface CheckboxInputProps {
     id: number;
@@ -49,9 +46,7 @@ const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorre
     return;
 };
 
-const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref) => {
-    const { label, id, isFinished } = props;
-
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({ label, id, isFinished }) => {
     const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
     const dispatch = useDispatch();
 
@@ -81,14 +76,10 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref
         const array: string[] = answer;
         e.target.checked ? array.splice(+e.target.id, 1, e.target.value) : array.splice(+e.target.id, 1, '');
         setAnswer([...array]);
-    };
 
-    useImperativeHandle(ref, () => ({
-        saveData() {
-            const result = { id, answer };
-            dispatch(addAnswer(result));
-        }
-    }));
+        const result = { id, answer: array };
+        dispatch(addAnswer(result));
+    };
 
     return (
         <ul>
@@ -119,6 +110,4 @@ const CheckboxInput = forwardRef<SaveDataHandle, CheckboxInputProps>((props, ref
                 : null}
         </ul>
     );
-});
-
-export default CheckboxInput;
+};

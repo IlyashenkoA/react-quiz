@@ -1,7 +1,5 @@
 import {
-    forwardRef,
     useEffect,
-    useImperativeHandle,
     useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +12,6 @@ import { RootState } from "../../store/reducers";
 import { DragDropId } from "../../store/types/reducer";
 
 import { DragDrop, QUESTIONS } from "../../types/data";
-import { SaveDataHandle } from "../../types/ref";
 
 import './DragDrop.css';
 
@@ -41,11 +38,7 @@ interface DragLabel {
     label: string;
 }
 
-const getEmptyArray = (data: DragDropInput) => {
-    const { drop } = data;
-
-    return Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
-};
+const getEmptyArray = (drop: DragDrop[]) => Array.from(drop, (item) => ({ dragId: 0, dragLabel: '', dropId: item.id }));
 
 /**
  * In case if quiz was completed, show if the answer was correct or incorrect
@@ -64,10 +57,8 @@ const getAnswerResult = ({ isFinished, answer }: ICorrectAnswer) => {
     return;
 };
 
-const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
-    const { drag, drop, id, isFinished } = data;
-
-    const [answer, setAnswer] = useState<DragDropId[]>(getEmptyArray(data));
+export const DragAndDrop: React.FC<DragDropInput> = ({ drag, drop, id, isFinished }) => {
+    const [answer, setAnswer] = useState<DragDropId[]>(getEmptyArray(drop));
     const dispatch = useDispatch();
 
     const savedAnswers = useSelector((state: RootState) => {
@@ -91,8 +82,13 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
             return;
         }
 
-        setAnswer(getEmptyArray(data));
+        setAnswer(getEmptyArray(drop));
     }, [id]);
+
+    useEffect(() => {
+        const result = { id, answer };
+        dispatch(addAnswer(result));
+    }, [answer]);
 
     const handleDrop = ({ dragItem, dropId }: handleDropProps) => {
         const dragItemId = getLastDroppedItemIdByLabel(dragItem.label).id;
@@ -121,13 +117,6 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
 
         return result[0];
     };
-
-    useImperativeHandle(ref, () => ({
-        saveData() {
-            const result = { id, answer };
-            dispatch(addAnswer(result));
-        }
-    }));
 
     return (
         <div className="drag-drop">
@@ -162,6 +151,4 @@ const DragAndDrop = forwardRef<SaveDataHandle, DragDropInput>((data, ref) => {
             </div>
         </div>
     );
-});
-
-export default DragAndDrop;
+};

@@ -32,7 +32,7 @@ export const QuizReducer = (state = initialState, action: IQuizAction) => {
 			const newArray = [...state.answers];
 			const index = newArray.findIndex((obj) => obj.id === action.payload.id);
 
-			if (index <= 0) {
+			if (index < 0) {
 				newArray.push(action.payload);
 
 				localStorage.setItem(
@@ -56,6 +56,7 @@ export const QuizReducer = (state = initialState, action: IQuizAction) => {
 				...state,
 				answers: newArray,
 			};
+
 		case ACTIONS.SET_EMPTY_ANSWERS:
 			return {
 				...state,

@@ -1,11 +1,11 @@
+import { DragDropId, IAnswer } from '../../../store/types/reducer';
 import {
-	RadioButtonQuestion,
-	TextQuestion,
 	CheckboxQuestion,
 	QUESTIONS,
 	QuestionData,
+	RadioButtonQuestion,
+	TextQuestion,
 } from './../../../types/data';
-import { DragDropId, IAnswer } from '../../../store/types/reducer';
 
 export const getQuizResults = (answers: IAnswer[], data: QuestionData[]) => {
 	let scores = Array.from(data, (item) => ({ id: item.id, scores: 0 }));
@@ -70,7 +70,7 @@ const validateTextInput = (data: TextQuestion, item: IAnswer) => {
 const validateRadioInput = (data: RadioButtonQuestion, item: IAnswer) => {
 	let score = 0;
 
-	if (item.answer === data.answer) return score++;
+	if (item.answer[0] === data.answer[0]) return ++score;
 
 	return score;
 };

@@ -1,8 +1,6 @@
 import {
     ChangeEvent,
-    forwardRef,
     useEffect,
-    useImperativeHandle,
     useState
 } from "react";
 
@@ -12,7 +10,6 @@ import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
 import { QUESTIONS, RadioButtonQuestion } from "../../types/data";
-import { SaveDataHandle } from "../../types/ref";
 
 interface RadioInputProps {
     id: number;
@@ -46,9 +43,7 @@ const getAnswerResult = ({ isFinished, answer, checked, correctAnswers }: ICorre
     return;
 };
 
-const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
-    const { label, id, isFinished } = props;
-
+export const RadioInput: React.FC<RadioInputProps> = ({ label, id, isFinished }) => {
     const [answer, setAnswer] = useState<string[]>(['']);
     const dispatch = useDispatch();
 
@@ -78,14 +73,10 @@ const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
         const array: string[] = answer;
         array.splice(0, 1, e.target.value);
         setAnswer([...array]);
-    };
 
-    useImperativeHandle(ref, () => ({
-        saveData() {
-            const result = { id, answer };
-            dispatch(addAnswer(result));
-        }
-    }));
+        const result = { id, answer: array };
+        dispatch(addAnswer(result));
+    };
 
     return (
         <ul>
@@ -116,6 +107,4 @@ const RadioInput = forwardRef<SaveDataHandle, RadioInputProps>((props, ref) => {
                 : null}
         </ul>
     );
-});
-
-export default RadioInput;
+};

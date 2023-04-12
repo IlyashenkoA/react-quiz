@@ -1,8 +1,8 @@
+import debounce from "lodash/debounce";
 import {
     ChangeEvent,
-    forwardRef,
+    useCallback,
     useEffect,
-    useImperativeHandle,
     useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "../../store/action-creators/action-creators";
 import { RootState } from "../../store/reducers";
 
-import { QUESTIONS, TextQuestion } from "../../types/data";
-import { SaveDataHandle } from "../../types/ref";
-
 import { isImage } from "../../assets/js/utils/Image";
+import { QUESTIONS, TextQuestion } from "../../types/data";
 
 import './TextInput.css';
 
@@ -53,9 +51,7 @@ const getAnswerResult = ({ isFinished, answer, correctAnswers, index }: ICorrect
     return;
 };
 
-const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
-    const { label, id, isFinished } = props;
-
+export const TextInput: React.FC<TextInputProps> = ({ label, id, isFinished }) => {
     const [answer, setAnswer] = useState<string[]>(getEmptyArray(label));
     const dispatch = useDispatch();
 
@@ -85,14 +81,14 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
         const array: string[] = answer;
         array.splice(+e.target.id, 1, e.target.value);
         setAnswer([...array]);
+
+        debounceDispatchChange(array);
     };
 
-    useImperativeHandle(ref, () => ({
-        saveData() {
-            const result = { id, answer };
-            dispatch(addAnswer(result));
-        }
-    }));
+    const debounceDispatchChange = useCallback(debounce((array) => {
+        const result = { id, answer: array };
+        dispatch(addAnswer(result));
+    }, 500), []);
 
     if (label) {
         return (
@@ -139,6 +135,4 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
             }}
         />
     );
-});
-
-export default TextInput;
+};
