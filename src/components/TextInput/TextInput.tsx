@@ -106,7 +106,8 @@ const TextInput = forwardRef<SaveDataHandle, TextInputProps>((props, ref) => {
                                 id={index.toString()}
                                 onChange={onInputChange}
                                 value={answer[index] ? answer[index] : ''}
-                                disabled={isFinished} style={{
+                                disabled={isFinished}
+                                style={{
                                     backgroundColor: getAnswerResult({
                                         isFinished: isFinished,
                                         answer: answer[index],

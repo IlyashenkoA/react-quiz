@@ -2,6 +2,7 @@ import {
     Dispatch,
     SetStateAction,
     forwardRef,
+    memo,
     useEffect,
     useImperativeHandle,
     useState
@@ -30,7 +31,7 @@ const getRemainingTime = ({ hours, minutes, seconds }: CurrentTimeProps) => {
     return `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
-const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
+const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
     const { defaultHours, defaultMinutes, defaultSeconds } = config.timer;
     const [hours, setHours] = useState<number>(defaultHours);
     const [minutes, setMinutes] = useState<number>(defaultMinutes);
@@ -134,6 +135,6 @@ const Timer = forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
             {getRemainingTime({ hours: hours, minutes: minutes, seconds: seconds })}
         </div>
     );
-});
+}));
 
 export default Timer;
