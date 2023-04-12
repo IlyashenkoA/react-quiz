@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Button/Button';
 import Intro from '../Intro/Intro';
 import Results from '../Results/Results';
 import { Section } from '../Section/Section';
-import Timer, { StopTimerHandle } from '../Timer/Timer';
+import { Timer } from '../Timer/Timer';
 
 import { setEmptyAnswers } from '../../store/action-creators/action-creators';
 import { RootState } from '../../store/reducers';
@@ -18,11 +18,6 @@ import './App.css';
 const App: React.FC = () => {
   const [questionId, setQuestionId] = useState<number>(0);
   const [isFinished, setIsFinished] = useState<boolean>(false);
-
-  /**
-   * Ref's are used to call child functions, when moving between questions to save answers in state or stop the timer
-   */
-  const timerRef = useRef<StopTimerHandle>(null);
 
   const { data } = useSelector((state: RootState) => {
     return state.QuizReducer;
@@ -84,7 +79,6 @@ const App: React.FC = () => {
      */
     if (questionId === data.length + 1) {
       setIsFinished(true);
-      timerRef.current && timerRef.current.stopTimer();
       localStorage.setItem(LocalStorageKeys.QUIZ_FINISHED, 'true');
       localStorage.removeItem(LocalStorageKeys.QUIZ_STARTED);
     }
@@ -125,7 +119,7 @@ const App: React.FC = () => {
       <nav className='nav'>
         <div className='nav__timer'>
           {questionId > 0 && !isFinished
-            ? <Timer ref={timerRef} setIsFinished={setIsFinished} setQuestionId={setQuestionId} />
+            ? <Timer setIsFinished={setIsFinished} setQuestionId={setQuestionId} />
             : null}
         </div>
         <ul className='nav__button-group'>

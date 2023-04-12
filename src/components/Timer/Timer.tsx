@@ -1,21 +1,14 @@
 import {
     Dispatch,
     SetStateAction,
-    forwardRef,
     memo,
     useEffect,
-    useImperativeHandle,
     useState
 } from "react";
 
 import { config, data } from "../../api/data";
 
 import { LocalStorageKeys } from "../../types/localStorage";
-
-export type StopTimerHandle = {
-    stopTimer: () => void;
-};
-
 interface TimerProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     setQuestionId: Dispatch<SetStateAction<number>>;
@@ -31,14 +24,13 @@ const getRemainingTime = ({ hours, minutes, seconds }: CurrentTimeProps) => {
     return `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
-const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
+export const Timer: React.FC<TimerProps> = memo(({ setIsFinished, setQuestionId }) => {
     const { defaultHours, defaultMinutes, defaultSeconds } = config.timer;
     const [hours, setHours] = useState<number>(defaultHours);
     const [minutes, setMinutes] = useState<number>(defaultMinutes);
     const [seconds, setSeconds] = useState<number>(defaultSeconds);
 
     useEffect(() => {
-        const { setIsFinished } = props;
         const date = new Date();
 
         /**
@@ -87,8 +79,6 @@ const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
     }, []);
 
     useEffect(() => {
-        const { setIsFinished, setQuestionId } = props;
-
         let myInterval = setInterval(() => {
             if (seconds > 0) {
                 setSeconds(prev => prev - 1);
@@ -124,19 +114,9 @@ const Timer = memo(forwardRef<StopTimerHandle, TimerProps>((props, ref) => {
         };
     });
 
-    useImperativeHandle(ref, () => ({
-        stopTimer() {
-            setHours(0);
-            setMinutes(0);
-            setSeconds(0);
-        }
-    }));
-
     return (
         <div className="timer" style={{ color: hours === 0 && minutes <= 1 ? '#FF0000' : '#000000' }}>
             {getRemainingTime({ hours, minutes, seconds })}
         </div>
     );
-}));
-
-export default Timer;
+});
