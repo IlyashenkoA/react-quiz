@@ -88,7 +88,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, id, isFinished }) =
     const debounceDispatchChange = useCallback(debounce((array) => {
         const result = { id, answer: array };
         dispatch(addAnswer(result));
-    }, 500), []);
+    }, 200), []);
 
     if (label) {
         return (
