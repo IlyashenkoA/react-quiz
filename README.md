@@ -1,12 +1,15 @@
-<h1 id="title">React Quiz</h1>
+<br/>
+<p align="center">
+  <h3 align="center">Quiz: Dynamic Learning Challenges</h3>
 
-<p id="description">This project is a simple online quiz developed on React. In this project the emphasis was on reusing components for such types of questions as with text input checkbox input radio input and drag drops. In the end, it is enough to create your own JSON file with questions and answers, paste it into the code and quiz will work.</p>
+  <p align="center">
+    <a href="https://react-quiz-swart.vercel.app/">View Demo</a>
+  </p>
+</p>
 
-<h2>🚀 Demo</h2>
+## About The Project
 
-[https://react-quiz-swart.vercel.app/](https://react-quiz-swart.vercel.app/)
-
-<h2>Project Screenshots:</h2>
+Introducing a straightforward online quiz project built using React. The primary focus of this project was to enhance component reusability, accommodating a variety of question types, including text inputs, checkboxes, radio inputs, and drag-and-drop interactions. The system seamlessly integrates with external JSON files, enabling you to craft and structure your questions and answers according to your preferences. 
 
 <img src="https://i.imgur.com/NfrIeZ3.png" alt="project-screenshot" width="800">
 
@@ -22,17 +25,17 @@
 
 <img src="https://i.imgur.com/alGBDjD.png" alt="project-screenshot" width="800">
 
-  
-  
-<h2>🧐 Features</h2>
+## Built With
 
-Here're some of the project's best features:
+* React
+* Redux
+* TypeScript
+* React DND
 
-*   If the test has started and the page has been closed it is possible to continue the test if the time has not expired
-*   Ability to use your own JSON file with questions and answers for the test if it corresponds to a certain structure
-*   At the end of the test, it will be seen which answers were correct and which were not
+## Getting Started
 
-<h2>🛠️ Installation Steps:</h2>
+
+### Installation
 
 <p>1. Clone the repository</p>
 
@@ -51,14 +54,3 @@ npm install
 ```
 npm run dev
 ```
-
-  
-  
-<h2>💻 Built with</h2>
-
-Technologies used in the project:
-
-*   React
-*   Redux
-*   TypeScript
-*   React DND
